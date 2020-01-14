@@ -12,7 +12,7 @@
 - gebruikers kunnen video's uploaden waarin zij uitleggen hoe zij een muziekinstrument bespelen. *MVP*
 - gebruikers kunnen een soort "cursus" aanschaffen van andere gebruikers
 - gebruikers kunnen hun kennis verkopen als soort "cursus" aan beginners
-- gebruikers kunnen discusseren op een forum
+- gebruikers kunnen hun voortgang volgen in een soort 'tijdbalk'
 - gebruikers kunnen hun eigen geüploade instructies met een moeilijkheidsgraad beoordelen:
 - *beginner*
 - *intermediate*
