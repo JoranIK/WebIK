@@ -32,9 +32,6 @@ Session(app)
 
 # let CS50 use SQL for our database
 db = SQL("sqlite:///WebIK22.db")
-<<<<<<< HEAD
->>>>>>> fe2161a8862ff1fbac62db3bc2ae37df2ac23efa
-=======
 
 
 
@@ -75,4 +72,3 @@ def register():
 
     # User reached route via GET (as by clicking a link or via redirect)
     return render_template("register.html")
->>>>>>> 9a95182d2cf3e165b75093be5fa2e6ded28130fc
