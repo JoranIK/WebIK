@@ -24,6 +24,5 @@
 - bootstrap
 - javascript
 - *concurrenten*
-- *Teoria* Alleen leesbare informatie, geen video's
+- *Teoria*: Alleen leesbare informatie, geen video's
 - veel websites gebaseerd op 1 muziekinstrument, met lelijk uiterlijk.
--
