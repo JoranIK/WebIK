@@ -7,11 +7,14 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from helpers import apology, login_required
+
 # Configure application
 app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+
 
 # Ensure responses aren't cached
 @app.after_request
@@ -29,4 +32,47 @@ Session(app)
 
 # let CS50 use SQL for our database
 db = SQL("sqlite:///WebIK22.db")
+<<<<<<< HEAD
 >>>>>>> fe2161a8862ff1fbac62db3bc2ae37df2ac23efa
+=======
+
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    """Register user"""
+
+    # Forget any user_id
+    session.clear()
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        # checks if username is not empty
+        if not request.form.get("username"):
+            return apology("Username can not be empty", 400)
+
+        # checks if username is available
+        rows = db.execute("SELECT * FROM users WHERE username = :username",
+                          username=request.form.get("username"))
+        if len(rows) >= 1:
+            return apology("Username already exists", 400)
+
+        # checks if password and confirmation are not empty
+        if not request.form.get("password") or not request.form.get("confirmation"):
+            return apology("Password can not be empty", 400)
+
+        # checks if password and confirmation match
+        if request.form.get("password") != request.form.get("confirmation"):
+            return apology("Your password doesn't match", 400)
+
+        # inserts data into database, and hashes password
+        db.execute("INSERT INTO users (username, hash) VALUES(:username, :password)",
+                   username=request.form.get("username"), password=generate_password_hash(request.form.get("password"), method='pbkdf2:sha256', salt_length=8))
+
+        # return to homepage
+        return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    return render_template("register.html")
+>>>>>>> 9a95182d2cf3e165b75093be5fa2e6ded28130fc
