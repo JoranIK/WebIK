@@ -33,6 +33,12 @@ Session(app)
 # let CS50 use SQL for our database
 db = SQL("sqlite:///WebIK22.db")
 
+
+@app.route("/", methods=["GET", "POST"])
+def index():
+    return render_template("index.html")
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
