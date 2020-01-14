@@ -32,10 +32,6 @@ Session(app)
 
 # let CS50 use SQL for our database
 db = SQL("sqlite:///WebIK22.db")
-<<<<<<< HEAD
->>>>>>> fe2161a8862ff1fbac62db3bc2ae37df2ac23efa
-=======
-
 
 
 @app.route("/register", methods=["GET", "POST"])
