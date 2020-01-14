@@ -1,1 +1,1 @@
-Project van IK22 voor het vak Webprogrammeren en databases.
+Project van IK22 voor het vak Webprogrammeren en databases. Hallo
