@@ -15,7 +15,7 @@ Onze website heeft als thema Muziekinstrumenten. Op de website kun je tutorials 
 - gebruikers kunnen een soort "cursus" aanschaffen van andere gebruikers
 - gebruikers kunnen hun kennis verkopen als soort "cursus" aan beginners
 - gebruikers kunnen hun voortgang volgen in een soort 'tijdbalk'
-- gebruikers kunnen hun eigen geüploade instructies met een moeilijkheidsgraad beoordelen: *beginner* *intermediate* *hard* *expert*
+- gebruikers kunnen hun eigen geüploade instructies met een moeilijkheidsgraad beoordelen: *beginner*, *intermediate*, *hard* ,*expert*
 
 **Afhankelijkheden**
 - *externe componenten*
