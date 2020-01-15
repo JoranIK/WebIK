@@ -49,4 +49,9 @@
 - upload - zorgt dat je video's kunt uploaden
 
 **Plug-Ins**
-- bootstrap
+- bootstrap - https://getbootstrap.com/docs/4.4/getting-started/introduction/
+- javascript - https://developer.mozilla.org/nl/docs/Web/JavaScript/Reference
+- Flask - http://flask.palletsprojects.com/en/1.1.x/
+
+
+
