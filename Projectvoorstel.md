@@ -50,4 +50,4 @@ Onze website heeft als thema Muziekinstrumenten. Op de website kun je tutorials 
 - javascript - https://developer.mozilla.org/nl/docs/Web/JavaScript/Reference
 - Flask - http://flask.palletsprojects.com/en/1.1.x/
 
-![schets](doc/IMG_1660.HEIC)
+![schets](doc/IMG_1660.jpeg)
