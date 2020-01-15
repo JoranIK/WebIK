@@ -9,6 +9,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <!-- documentation at http://getbootstrap.com/docs/4.1/, alternative themes at https://bootswatch.com/ -->
+        <link href="../static/styles.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 
         <link href="/static/styles.css" rel="stylesheet">
@@ -17,33 +19,69 @@
         <title> GetMusical: {% block title %}{% endblock %}</title>
 
         <!--Navigation bar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <a class="navbar-brand" href="#">WebIK</a>
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #0a5479;">
+          <a class="navbar-brand" href="/">
+            <img src="https://i.imgur.com/voGyhbb.png" class="d-inlin-block align-top" width="93" height="34" href="/" alt="">
+            &nbsp;&nbsp;GetMusical
+          </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-              <li class="nav-item active">
-                <a class="nav-link" href="/index.html">Home <span class="sr-only">(current)</span></a>
+              <li class="nav-item">
+                <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/sp.html">Science Park</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/about.html">De kat</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="/contact.html">Contact</a>
+                <a class="nav-link" href="/instruments">Instruments</a>
               </li>
             </ul>
           </div>
+          <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+          </form>
+          &nbsp;&nbsp;
+          <div class="dropdown">
+            <button type="button" id="loginBtn" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Login
+            </button>
+              <form class="dropdown-menu dropdown-menu-right p-4" id="loginFormDropdown" style="display: none;">
+                <div class="form-group">
+                  <label for="usernameDropdown">Username</label>
+                  <input type="text" class="form-control" id="usernameDropdown" placeholder="Username">
+                </div>
+                <div class="form-group">
+                  <label for="passwordDropdown">Password</label>
+                  <input type="password" class="form-control" id="passwordDropdown" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary">Sign in</button>
+                <br><br>
+                <div id="signupLink">
+                  <a href="/register.html">
+                    No account? Sign up!
+                  </a>
+                </div>
+              </form>
+          </div>
         </nav>
-
     </head>
     <body>
-        <main class="container p-5">
-            {% block main %}{% endblock %}
-        </main>
+      <main class="container p-5">
+          {% block main %}{% endblock %}
+      </main>
     </body>
 </html>
+
+<script type="text/javascript">
+    var loginButton = document.getElementById('loginBtn');
+    var loginFormDropdown = document.getElementById('loginFormDropdown')
+    loginButton.onclick = function() {
+      // document.getElementById('loginFormDropdown').style.display='block';
+      if (loginFormDropdown.style.display === 'none') {
+        loginFormDropdown.style.display = 'block'
+      } else {
+        loginFormDropdown.style.display='none';
+      }
+    }
+</script>
