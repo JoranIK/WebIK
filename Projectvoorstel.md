@@ -27,3 +27,26 @@
 - *Teoria* Alleen leesbare informatie, geen video's
 - veel websites gebaseerd op 1 muziekinstrument, met lelijk uiterlijk.
 -
+
+**Controllers**
+- Login - post
+- Register - post
+- Homepage - get - dit is de homepage van de website, waar je op komt als je de website zoekt
+- Follow - post - gebruikers volgen, waarna ze in je timeline verschijnen
+- Comment - post - reageren onder een video
+- Like - post - video leuk vinden
+- Skill_level - get en post - geeft de graad aan waarin gebruiker een instrument beheerst.
+- Timeline - get - Zie video's van gebruikers die gevolgd worden
+- Search_instrument - post - geeft instrument en toont video's van gebruikers die dit instrument bespelen
+- Notification - get - krijg een mail als een gebruiker die je volgt een video upload
+- See_progress - get - krijg inzicht in de vooruitgang die gebruiker geboekt heeft
+- Set_private - post - geeft gebruikers kans om account openbaar of prive te maken
+
+**Helpers**
+- login required -  zorgt dat je ingelogd moet zijn om bepaalde functies te gebruiken
+- apology - geeft een excuusformulier als er iets is misgegaan
+- Skill -  berekent skill level
+- upload - zorgt dat je video's kunt uploaden
+
+**Plug-Ins**
+- bootstrap
