@@ -51,3 +51,6 @@ Onze website heeft als thema Muziekinstrumenten. Op de website kun je tutorials 
 - Flask - http://flask.palletsprojects.com/en/1.1.x/
 
 ![schets](doc/IMG_0137.jpeg)
+![schets](doc/IMG_0137.jpeg)
+![schets](doc/IMG_2450.jpeg)
+![schets](doc/IMG_0137.jpeg)
