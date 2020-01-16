@@ -25,3 +25,7 @@ body {
     font-size: 35px;
     top: 30px;
 }
+
+.homescreen {
+    float: left;
+}
