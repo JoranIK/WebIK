@@ -12,7 +12,7 @@ body {
     text-align: center;
     color: white;
     font-size: 50px;
-    top: 100px;
+    top: 75px;
 }
 
 .sign_up_text {
@@ -20,10 +20,23 @@ body {
     font-size: 35px;
     top: 30px;
 }
-<<<<<<< HEAD
 
-.homescreen {
+.home_teacher {
     float: left;
+    position: relative;
+    width: 450px;
+    top: 200px;
+    text-align: center;
+    color: #1dadea;
+    font-size: 30px;
 }
-=======
->>>>>>> f8a08903d5f2f6fc31a69b4b4b90318b154b08b4
+
+.home_student {
+    float: right;
+    position: relative;
+    width: 450px;
+    top: 200px;
+    text-align: center;
+    color: #1dadea;
+    font-size: 30px;
+}
