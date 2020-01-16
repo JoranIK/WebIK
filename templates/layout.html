@@ -8,6 +8,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+
         <!-- documentation at http://getbootstrap.com/docs/4.1/, alternative themes at https://bootswatch.com/ -->
         <link href="../static/styles.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -40,7 +41,7 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="submit">Search</button>
           </form>
-          <a href="/register" class="btn btn-info mr-2">Register</a>
+
           <div class="dropdown">
             <button type="button" id="loginBtn" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Login
@@ -64,7 +65,8 @@
               </form>
           </div>
         </nav>
-    </head>
+  </head>
+
     <body>
       <main class="container p-5">
           {% block main %}{% endblock %}
