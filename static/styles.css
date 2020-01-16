@@ -3,11 +3,6 @@
     height: 300px !important;
 }
 
-.vl {
-  border-left: 1px solid white;
-  height: 50px;
-}
-
 body {
     background-color: #1dadea;
 }
@@ -25,7 +20,10 @@ body {
     font-size: 35px;
     top: 30px;
 }
+<<<<<<< HEAD
 
 .homescreen {
     float: left;
 }
+=======
+>>>>>>> f8a08903d5f2f6fc31a69b4b4b90318b154b08b4
