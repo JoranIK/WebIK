@@ -7,3 +7,21 @@
   border-left: 1px solid white;
   height: 50px;
 }
+
+body {
+    background-color: #1dadea;
+}
+
+.welcome_text {
+    position: relative;
+    text-align: center;
+    color: white;
+    font-size: 50px;
+    top: 100px;
+}
+
+.sign_up_text {
+    position: relative;
+    font-size: 35px;
+    top: 30px;
+}
