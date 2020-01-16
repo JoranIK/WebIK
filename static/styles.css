@@ -3,14 +3,16 @@
     height: 300px !important;
 }
 
-body {
-    background-color: #1dadea;
+body, html {
+    background-image: url("notes.jpg");
+    background-repeat: repeat;
+    background-size: cover;
 }
 
 .welcome_text {
     position: relative;
     text-align: center;
-    color: white;
+    color: black;
     font-size: 50px;
     top: 75px;
 }
