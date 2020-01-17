@@ -68,7 +68,7 @@ def register():
             return apology("Your password doesn't match", 400)
 
         # inserts data into database, and hashes password
-        db.execute("INSERT INTO users (username, hash) VALUES(:username, :password)",
+        db.execute("INSERT INTO users (username, password) VALUES(:username, :password)",
                    username=request.form.get("username"), password=generate_password_hash(request.form.get("password"), method='pbkdf2:sha256', salt_length=8))
 
         # return to homepage
