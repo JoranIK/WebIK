@@ -4,10 +4,8 @@
 }
 
 
-body, html {
-    background-image: url("notes.jpg");
-    background-repeat: repeat;
-
+body {
+    background-image: url("instruments.jpg");
 }
 
 .welcome_text {
@@ -30,7 +28,7 @@ body, html {
     width: 450px;
     top: 200px;
     text-align: center;
-    color: #1dadea;
+    color: #0a5479;
     font-size: 30px;
 }
 
@@ -40,7 +38,7 @@ body, html {
     width: 450px;
     top: 200px;
     text-align: center;
-    color: #1dadea;
+    color: #0a5479;
     font-size: 30px;
 }
 
