@@ -14,20 +14,17 @@ body {
     text-align: center;
     color: black;
     font-size: 50px;
-    top: 75px;
 }
 
 .sign_up_text {
     position: relative;
     font-size: 35px;
-    top: 30px;
 }
 
 .home_teacher {
     float: left;
     position: relative;
     width: 450px;
-    top: 200px;
     text-align: center;
     color: #0a5479;
     font-size: 30px;
@@ -37,7 +34,6 @@ body {
     float: right;
     position: relative;
     width: 450px;
-    top: 200px;
     text-align: center;
     color: #0a5479;
     font-size: 30px;
