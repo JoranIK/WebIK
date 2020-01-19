@@ -39,6 +39,22 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+
+    # Weghalen zodra login werkt
+    session['user_id'] = int('3')
+    # Weghalen zodra login werkt
+
+    user_info = db.execute("SELECT * FROM users WHERE id = :id",
+                            id=session['user_id'])[0]
+
+    wants = [ item for item in user_info if user_info[item] == 'yes' and item.startswith('want')]
+    knows = [ item for item in user_info if user_info[item] == 'yes' and item.startswith('know')]
+
+    return render_template("profile.html", user_info=user_info, wants=wants)
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
@@ -155,8 +171,6 @@ def login():
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
-
-
 
 
 @app.route("/instruments", methods=["GET", "POST"])

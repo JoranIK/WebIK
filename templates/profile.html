@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ user_info['username'] }}'s Profile
+{% endblock %}
+
+{% block main %}
+<body>
+  <div class="container" style="background-color: green;">
+    <div class="row">
+      <div class="col">
+        <div class="container mr-5" style="background-color: blue;">
+          {% if user_info['picture_url'] == None %}
+            <img src="/static/avatar.png" class="rounded-circle float-left" alt="Profile picture" width="20%" heigth="20%">
+          {% else %}
+            <img src="{{ user_info['picture_url'] }}" class="rounded-circle float-left mr-5" alt="Profile picture" width="20%" heigth="20%">
+          {% endif %}
+        </div>
+        <h1 class="display-4 text-center">{{ user_info['username'] }}</h1>
+        <hr>
+        <div class="ml-1">
+          {% if wants %}
+          <h5>Learning: </h5>
+          <ul class="list-group list-group-flush">
+            {% for item in wants %}
+              {% if item == 'want_guitar' %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Guitar
+                <span class="badge badge-primary badge-pill">level</span>
+              </li>
+              {% elif item == 'want_electric_guitar' %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Electric guitar
+                <span class="badge badge-primary badge-pill">level</span>
+              </li>
+              {% elif item == 'want_piano' %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Piano
+                <span class="badge badge-primary badge-pill">level</span>
+              </li>
+              {% elif item == 'want_drums' %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Drums
+                <span class="badge badge-primary badge-pill">level</span>
+              </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div
+</body>
+{% endblock %}
