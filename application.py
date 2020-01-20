@@ -54,10 +54,6 @@ def upload():
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
 
-    # Weghalen zodra login werkt
-    session['user_id'] = int('3')
-    # Weghalen zodra login werkt
-
     user_info = db.execute("SELECT * FROM users WHERE id = :id",
                             id=session['user_id'])[0]
 
