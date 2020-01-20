@@ -39,6 +39,22 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+
+    # Weghalen zodra login werkt
+    session['user_id'] = int('3')
+    # Weghalen zodra login werkt
+
+    user_info = db.execute("SELECT * FROM users WHERE id = :id",
+                            id=session['user_id'])[0]
+
+    wants = [ item for item in user_info if user_info[item] == 'yes' and item.startswith('want')]
+    knows = [ item for item in user_info if user_info[item] == 'yes' and item.startswith('know')]
+
+    return render_template("profile.html", user_info=user_info, wants=wants)
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
@@ -67,15 +83,94 @@ def register():
         if request.form.get("password") != request.form.get("confirmation"):
             return apology("Your password doesn't match", 400)
 
+        # set yes if user wants to learn instrument
+        if request.form.get("want-guitar") == "on":
+            want_guitar = "yes"
+        else:
+            want_guitar = "no"
+
+        if request.form.get("want-electric-guitar") == "on":
+            want_electric_guitar = "yes"
+        else:
+            want_electric_guitar = "no"
+
+        if request.form.get("want-piano") == "on":
+            want_piano = "yes"
+        else:
+            want_piano = "no"
+
+        if request.form.get("want-drums") == "on":
+            want_drums = "yes"
+        else:
+            want_drums = "no"
+
+        # set yes if user knows instrument
+        if request.form.get("know-guitar") == "on":
+            know_guitar = "yes"
+        else:
+            know_guitar = "no"
+
+        if request.form.get("know-electric-guitar") == "on":
+            know_electric_guitar = "yes"
+        else:
+            know_electric_guitar = "no"
+
+        if request.form.get("know-piano") == "on":
+            know_piano = "yes"
+        else:
+            know_piano = "no"
+
+        if request.form.get("know-drums") == "on":
+            know_drums = "yes"
+        else:
+            know_drums = "no"
+
         # inserts data into database, and hashes password
-        db.execute("INSERT INTO users (username, password) VALUES(:username, :password)",
-                   username=request.form.get("username"), password=generate_password_hash(request.form.get("password"), method='pbkdf2:sha256', salt_length=8))
+        db.execute("INSERT INTO users (username, password, want_guitar, know_guitar, want_electric_guitar, know_electric_guitar, want_piano, know_piano, want_drums, know_drums) VALUES(:username, :password, :want_guitar, :know_guitar, :want_electric_guitar, :know_electric_guitar, :want_piano, :know_piano, :want_drums, :know_drums)",
+                   username=request.form.get("username"), password=generate_password_hash(request.form.get("password"), method='pbkdf2:sha256', salt_length=8), want_guitar=want_guitar,  know_guitar=know_guitar, want_electric_guitar=want_electric_guitar, know_electric_guitar=know_electric_guitar, want_piano=want_piano, know_piano=know_piano, want_drums=want_drums, know_drums=know_drums)
 
         # return to homepage
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
     return render_template("register.html")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    """Log user in"""
+
+    # Forget any user_id
+    session.clear()
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        # Ensure username was submitted
+        if not request.form.get("username"):
+            return apology("must provide username", 403)
+
+        # Ensure password was submitted
+        elif not request.form.get("password"):
+            return apology("must provide password", 403)
+
+        # Query database for username
+        rows = db.execute("SELECT * FROM users WHERE username = :username",
+                          username=request.form.get("username"))
+
+        # Ensure username exists and password is correct
+        if len(rows) != 1 or not check_password_hash(rows[0]["password"], request.form.get("password")):
+            return apology("invalid username and/or password", 403)
+
+        # Remember which user has logged in
+        session["user_id"] = rows[0]["id"]
+
+        # Redirect user to home page
+        return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("login.html")
 
 
 @app.route("/instruments", methods=["GET", "POST"])
