@@ -38,6 +38,18 @@ db = SQL("sqlite:///WebIK22.db")
 def index():
     return render_template("index.html")
 
+@app.route("/upload", methods=["GET","POST"] )
+def upload():
+    if request.method == "POST":
+
+        video_id = request.form.get("video_id")
+        video_name = request.form.get("video_name")
+        instrument_select = request.form.get("instrument-select")
+        level_select = request.form.get("level-select")
+
+
+        return redirect ("/")
+    return render_template("upload.html")
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():

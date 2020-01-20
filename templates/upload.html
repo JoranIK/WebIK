@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Instruments
+{% endblock %}
+
+{% block main %}
+<div class="home_teacher">
+    <div class="card" style="background-color: rgba(255,255,255,0.9)">
+        <div class="card-header">
+            <h1>How to upload your video</h1>
+        </div>
+        <div class="card-body">
+            <p class="card-text">1. Upload your video to YouTube<br>
+                                 2. Get the video's ID, for example https://www.youtube.com/watch?v=<mark class=bold>vphWgqbF-AM</mark><br>
+                                 3. Enter the name of the video<br>
+                                 4. Select the instrument and the skill level</p>
+        </div>
+    </div>
+</div>
+
+<div class="home_student">
+    <div class="card" style="background-color: rgba(255,255,255,0.9)">
+        <div class="card-header">
+            <h1>Upload your video here!</h1>
+        </div>
+        <div class="card-body">
+          <form action="/upload" method="post">
+            <p class="card-text">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon3">https://www.youtube.com/watch?v=</span>
+                    </div>
+                    <input type="text" class="form-control" name="video_id" id="video_id" aria-describedby="basic-addon3">
+                  </div>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">Video name</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Video name" name="video_name" aria-label="video_name" aria-describedby="basic-addon1">
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="instruments-select">Instruments</label>
+                      <select name="instruments-select" class="btn btn-primary form-control">
+                        <option value="Piano">Piano</option>
+                        <option value="Guitar">Guitar</option>
+                        <option value="Drum">Drum</option>
+                        <option value="Electric-guitar">Electric guitar</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="level-select">Level</label>
+                      <select name="level-select" class="btn btn-primary form-control">
+                        <option value="Beginner">Beginner</option>
+                        <option value="Competent">Competent</option>
+                        <option value="Proficient">Proficient</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Upload!</button>
+                  </div>
+            </p>
+          </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
