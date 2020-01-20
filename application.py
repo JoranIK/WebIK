@@ -38,15 +38,18 @@ db = SQL("sqlite:///WebIK22.db")
 def index():
     return render_template("index.html")
 
+
 @app.route("/upload", methods=["GET","POST"] )
 def upload():
     if request.method == "POST":
-
+        user_id = session["user_id"]
         video_id = request.form.get("video_id")
         video_name = request.form.get("video_name")
-        instrument_select = request.form.get("instrument-select")
-        level_select = request.form.get("level-select")
-
+        instrument = request.form.get("instruments-select")
+        print(instrument)
+        skill_level = request.form.get("level-select")
+        db.execute("INSERT INTO video (id, video_id, video_name, instrument, skill_level) VALUES (:user_id, :video_id, :video_name, :instrument, :skill_level)",
+                    user_id=user_id, video_id=video_id, video_name=video_name, instrument=instrument, skill_level=skill_level)
 
         return redirect ("/")
     return render_template("upload.html")
