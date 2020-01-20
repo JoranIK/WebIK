@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Comment section
+{% endblock %}
+
+{% block main %}
+<body>
+    <div class="box">
+        <div class="page-data">
+            <!--<b>Video comes here</b>-->
+            <iframe src="https://www.youtube.com/embed/827jmswqnEA" frameborder = "0" allowfullscreen></iframe>
+        </div>
+        <div class="comment-box">
+            <h3 class="comment-title">Comments of users</h3>
+
+                <div class="comment-insert">
+                    <h3 class="user-says">Scarlet Johnson</h3>
+
+                    <div class:"comment-insert-case">
+                        <textarea class="comment-insert-text"></textarea>
+                    </div>
+
+                    <div class="comment-post-btn-box">
+                        POST
+                    </div>
+                </div>
+
+                <div class="comment-list">
+                    <ul class="comment-cover-ul">
+
+                        <li class="comment-cover" id="_1">
+                            <div class="user-img">
+                                <img src="/static/avatar.png" class="user-img-pic" />
+                            </div>
+
+                            <div class="comment-body">
+                                <h3 class="username-field">
+                                    Rick Peter
+                                </h3>
+                                <div class="comment-text">
+                                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                </div>
+
+                                <div class="comment-button-cover">
+                                    <ul>
+                                        <li class="delete-btn">X</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="comment-cover" id="_1">
+                            <div class="user-img">
+                                <img src="/static/avatar.png" class="user-img-pic" />
+                            </div>
+
+                            <div class="comment-body">
+                                <h3 class="username-field">
+                                    David Wang
+                                </h3>
+                                <div class="comment-text">
+                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,
+                                </div>
+                            </div>
+
+                            <div class="comment-button-cover">
+                                    <ul>
+                                        <li class="delete-btn">X</li>
+                                    </ul>
+                            </div>
+                        </li>
+
+                    </ul>
+
+
+                </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

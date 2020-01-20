@@ -53,6 +53,27 @@ def upload():
 
         return redirect ("/")
     return render_template("upload.html")
+
+
+@app.route("/search", methods=["GET","POST"])
+def search():
+
+    # maak een lijst met users
+    userlist = db.execute("SELECT username FROM users")
+    results = []
+
+    if request.method == "POST":
+        # print(userlist[0])
+        # print(userlist[1]['username'])
+        # print(results)
+        for item in userlist:
+            # print(item['username']
+            if request.form.get("searchfield") in item['username']:
+                results.append(item['username'])
+        print(results)
+    return render_template("search.html", results=results)
+
+
 @app.route("/logout")
 def logout():
 
