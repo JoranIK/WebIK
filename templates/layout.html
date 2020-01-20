@@ -35,12 +35,21 @@
               <li class="nav-item">
                 <a class="nav-link" href="/instruments">Instruments</a>
               </li>
+              {% if session.user_id %}
+                <li class="nav-item">
+                  <a class="nav-link" href="/profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/upload">Upload</a>
+                </li>
+              {% endif %}
             </ul>
           </div>
           <form class="form-inline">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="submit">Search</button>
           </form>
+          {% if not session.user_id %}
           <a href="/register" class="btn btn-info mr-2">Register</a>
           <div class="dropdown">
             <button type="button" id="loginBtn" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -64,6 +73,9 @@
                 </div>
               </form>
           </div>
+          {% else %}
+          <a href="/logout" class="btn btn-danger mr-2">Logout</a>
+          {% endif %}
         </nav>
   </head>
 

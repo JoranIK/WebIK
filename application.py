@@ -50,6 +50,12 @@ def upload():
 
         return redirect ("/")
     return render_template("upload.html")
+@app.route("/logout")
+def logout():
+
+    session.clear()
+
+    return render_template("logout.html")
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
