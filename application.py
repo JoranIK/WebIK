@@ -1,4 +1,5 @@
 import os
+import sys
 
 from cs50 import SQL
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
@@ -55,23 +56,49 @@ def upload():
     return render_template("upload.html")
 
 
+@app.route("/follow", methods=["GET", "POST"])
+@login_required
+def follow():
+
+    # stel de id's vast. De ingelogde user is de slave.
+    master_id = request.args.get("user_id")
+    print("master: ", master_id, file=sys.stdout)
+    slave_id = session['user_id']
+    print("slave: ", slave_id, file=sys.stdout)
+    db_followers = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
+                                    slave_id=slave_id)
+
+    already_following = [ item['master_id'] for item in db_followers ]
+    print("already following: ", already_following, file=sys.stdout)
+
+    exists = db.execute("SELECT master_id, slave_id FROM followers WHERE master_id = :master_id AND slave_id = :slave_id",
+                        master_id=master_id, slave_id=slave_id)
+    if not exists:
+        db.execute("INSERT INTO followers (master_id, slave_id) VALUES(:master_id, :slave_id)",
+                    master_id=master_id, slave_id=slave_id)
+    else:
+        print("You are already following this account", file=sys.stdout)
+    return '', 204
+
+
 @app.route("/search", methods=["GET","POST"])
 def search():
 
     # maak een lijst met users
-    userlist = db.execute("SELECT username FROM users")
-    results = []
+    userlist = db.execute("SELECT username, id FROM users")
+    results = dict()
+
+    if session['user_id']:
+        db_followers = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
+                                        slave_id=session['user_id'])
+        already_following = [ item['master_id'] for item in db_followers ]
 
     if request.method == "POST":
-        # print(userlist[0])
-        # print(userlist[1]['username'])
-        # print(results)
         for item in userlist:
-            # print(item['username']
             if request.form.get("searchfield") in item['username']:
-                results.append(item['username'])
-        print(results)
-    return render_template("search.html", results=results)
+                results[item['username']] = item['id']
+        print("Results: ", results, file=sys.stdout)
+    return render_template("search.html", results=results, already_following=already_following)
 
 
 @app.route("/logout")

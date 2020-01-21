@@ -1,20 +1,43 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Home
+    Search
 {% endblock %}
 
 {% block main %}
 <body>
   <h1 class="display-5">Results that match your search:</h1>
   <ul class="list-group">
-    {% for item in results %}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-      {{ item }}
-      <span class="badge badge-primary badge-pill">skill level</span>
-    </li>
+    {% for username, id in results.items() %}
+    <form action="/follow?username={{ username }}" method="GET">
+      <div class="form-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ username }}
+          <input type="hidden" name="user_id" value="{{ id }}"></input>
+          {% if session.user_id %}
+            {% if id in already_following %}
+              <button class="btn btn-success" type="submit" id="followingBtn" name="id">Following</button>
+            {% else %}
+              <button class="btn btn-info" type="submit" id="followBtn" name="id">Follow</button>
+            {% endif %}
+          {% endif %}
+        </li>
+      </div>
+    </form>
     {% endfor %}
   </ul>
 </body>
+
+<script type="text/javascript">
+    var FollowButton = document.getElementById('followBtn');
+    var FollowingButton = document.getElementById('followingBtn')
+    console.log('script')
+    FollowButton.onclick = function() {
+      FollowButton.classList.remove('btn-info')
+      FollowButton.classList.add('btn-success')
+      FollowButton.innerHTML = 'Following'
+      console.log('success, kind of')
+    }
+</script>
 
 {% endblock %}
