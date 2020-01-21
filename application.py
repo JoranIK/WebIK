@@ -55,7 +55,6 @@ def upload():
         return redirect ("/")
     return render_template("upload.html")
 
-<<<<<<< HEAD
 
 @app.route("/follow", methods=["GET", "POST"])
 @login_required
@@ -70,20 +69,16 @@ def follow():
                                     slave_id=slave_id)
 
     already_following = [ item['master_id'] for item in db_followers ]
-    print("already following: ", already_following, file=sys.stdout)
 
     exists = db.execute("SELECT master_id, slave_id FROM followers WHERE master_id = :master_id AND slave_id = :slave_id",
                         master_id=master_id, slave_id=slave_id)
     if not exists:
         db.execute("INSERT INTO followers (master_id, slave_id) VALUES(:master_id, :slave_id)",
                     master_id=master_id, slave_id=slave_id)
-    else:
-        print("You are already following this account", file=sys.stdout)
+                    
     return '', 204
 
 
-=======
->>>>>>> 4a629a3d4036219ae2bbc4fa8ae1eba199bc788e
 @app.route("/search", methods=["GET","POST"])
 def search():
 
@@ -257,4 +252,3 @@ def instruments():
 
 
     return render_template("instruments.html")
-

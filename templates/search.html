@@ -16,9 +16,9 @@
           <input type="hidden" name="user_id" value="{{ id }}"></input>
           {% if session.user_id %}
             {% if id in already_following %}
-              <button class="btn btn-success" type="submit" id="followingBtn" name="id">Following</button>
+              <button class="btn btn-success" type="submit" name="id">Following</button>
             {% else %}
-              <button class="btn btn-info" type="submit" id="followBtn" name="id">Follow</button>
+              <button class="btn btn-info" type="submit" name="id">Follow</button>
             {% endif %}
           {% endif %}
         </li>
@@ -29,15 +29,22 @@
 </body>
 
 <script type="text/javascript">
-    var FollowButton = document.getElementById('followBtn');
-    var FollowingButton = document.getElementById('followingBtn')
-    console.log('script')
-    FollowButton.onclick = function() {
-      FollowButton.classList.remove('btn-info')
-      FollowButton.classList.add('btn-success')
-      FollowButton.innerHTML = 'Following'
-      console.log('success, kind of')
-    }
+(function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        document.querySelectorAll('.btn').forEach(button => {
+          button.addEventListener('click', event => {
+            console.log('click event')
+            if(button.innerHTML === 'Follow') {
+              console.log('if statement')
+              button.classList.remove('btn-info')
+              button.classList.add('btn-success')
+              button.innerHTML = 'Following'
+            }
+          })
+        })
+      }, false);
+    })();
 </script>
 
 {% endblock %}
