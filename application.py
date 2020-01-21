@@ -55,6 +55,7 @@ def upload():
         return redirect ("/")
     return render_template("upload.html")
 
+<<<<<<< HEAD
 
 @app.route("/follow", methods=["GET", "POST"])
 @login_required
@@ -81,6 +82,8 @@ def follow():
     return '', 204
 
 
+=======
+>>>>>>> 4a629a3d4036219ae2bbc4fa8ae1eba199bc788e
 @app.route("/search", methods=["GET","POST"])
 def search():
 
@@ -254,3 +257,4 @@ def instruments():
 
 
     return render_template("instruments.html")
+
