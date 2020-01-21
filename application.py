@@ -56,15 +56,14 @@ def upload():
     return render_template("upload.html")
 
 
-@app.route("/follow", methods=["GET", "POST"])
+@app.route("/follow", methods=["GET"])
 @login_required
 def follow():
 
     # stel de id's vast. De ingelogde user is de slave.
     master_id = request.args.get("user_id")
-    print("master: ", master_id, file=sys.stdout)
     slave_id = session['user_id']
-    print("slave: ", slave_id, file=sys.stdout)
+
     db_followers = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
                                     slave_id=slave_id)
 
@@ -75,7 +74,29 @@ def follow():
     if not exists:
         db.execute("INSERT INTO followers (master_id, slave_id) VALUES(:master_id, :slave_id)",
                     master_id=master_id, slave_id=slave_id)
-                    
+
+    return '', 204
+
+
+@app.route("/unfollow", methods=["GET"])
+@login_required
+def unfollow():
+
+    # stel de id's vast. De ingelogde user is de slave.
+    master_id = request.args.get("user_id")
+    slave_id = session['user_id']
+
+    db_followers = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
+                                    slave_id=slave_id)
+
+    already_following = [ item['master_id'] for item in db_followers ]
+
+    exists = db.execute("SELECT master_id, slave_id FROM followers WHERE master_id = :master_id AND slave_id = :slave_id",
+                        master_id=master_id, slave_id=slave_id)
+    if exists:
+        db.execute("DELETE FROM followers WHERE master_id = :master_id AND slave_id = :slave_id",
+                    master_id=master_id, slave_id=slave_id)
+
     return '', 204
 
 

@@ -9,21 +9,31 @@
   <h1 class="display-5">Results that match your search:</h1>
   <ul class="list-group">
     {% for username, id in results.items() %}
-    <form action="/follow?username={{ username }}" method="GET">
-      <div class="form-group">
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          {{ username }}
-          <input type="hidden" name="user_id" value="{{ id }}"></input>
-          {% if session.user_id %}
-            {% if id in already_following %}
-              <button class="btn btn-success" type="submit" name="id">Following</button>
-            {% else %}
-              <button class="btn btn-info" type="submit" name="id">Follow</button>
-            {% endif %}
-          {% endif %}
-        </li>
-      </div>
-    </form>
+      {% if id in already_following %}
+        <form action="/unfollow?username={{ username }}" method="GET">
+          <div class="form-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              {{ username }}
+              <input type="hidden" name="user_id" value="{{ id }}"></input>
+              {% if session.user_id %}
+                  <button class="btn btn-danger" type="submit" name="id">Unfollow</button>
+              {% endif %}
+            </li>
+          </div>
+        </form>
+      {% else %}
+        <form action="/follow?username={{ username }}" method="GET">
+          <div class="form-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              {{ username }}
+              <input type="hidden" name="user_id" value="{{ id }}"></input>
+              {% if session.user_id %}
+                  <button class="btn btn-info" type="submit" name="id">Follow</button>
+              {% endif %}
+            </li>
+          </div>
+        </form>
+      {% endif %}
     {% endfor %}
   </ul>
 </body>
@@ -36,8 +46,14 @@
           button.addEventListener('click', event => {
             if(button.innerHTML === 'Follow') {
               button.classList.remove('btn-info')
-              button.classList.add('btn-success')
-              button.innerHTML = 'Following'
+              button.classList.add('btn-danger')
+              button.innerHTML = 'Unfollow'
+              button.parentNode.parentNode.parentNode.action = '/follow?username={{ username }}' + button.parentNode.parentNode.parentNode.action.split('=')[1]
+            } else {
+              button.classList.remove('btn-danger')
+              button.classList.add('btn-info')
+              button.innerHTML = 'Follow'
+              button.parentNode.parentNode.parentNode.action = '/unfollow?username=' + button.parentNode.parentNode.parentNode.action.split('=')[1]
             }
           })
         })
