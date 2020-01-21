@@ -54,7 +54,6 @@ def upload():
         return redirect ("/")
     return render_template("upload.html")
 
-
 @app.route("/search", methods=["GET","POST"])
 def search():
 
@@ -214,3 +213,4 @@ def login():
 @app.route("/instruments", methods=["GET", "POST"])
 def instruments():
     return render_template("instruments.html")
+
