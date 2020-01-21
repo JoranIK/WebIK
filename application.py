@@ -212,5 +212,18 @@ def login():
 
 @app.route("/instruments", methods=["GET", "POST"])
 def instruments():
+
+    if request.method == "POST":
+
+        instrument = request.form.get("instruments-select")
+        skill_level = request.form.get("level-select")
+
+        videos = db.execute("SELECT * FROM video WHERE instrument = :instrument AND skill_level = :skill_level",
+                            instrument=instrument, skill_level=skill_level)
+
+
+        return render_template("instruments.html", videos=videos)
+
+
     return render_template("instruments.html")
 
