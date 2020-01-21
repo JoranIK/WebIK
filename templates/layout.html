@@ -71,7 +71,9 @@
               </form>
           </div>
           {% else %}
-          <a href="/logout" class="btn btn-danger mr-2">Logout</a>
+            <a href="/logout" class="btn btn-danger mr-2">Logout</a>
+            <a href="/logout" id="loginBtn" style="display: none;" class="btn btn-danger mr-2">Logout</a>
+            <a href="/logout" id="loginFormDropdown" style="display: none;" class="btn btn-danger mr-2">Logout</a>
           {% endif %}
         </nav>
   </head>
