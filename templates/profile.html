@@ -47,9 +47,47 @@
               {% endfor %}
             </ul>
           {% endif %}
+          {% if following_usernames %}
+            <ul class="list-group list-group-flush">
+            {% for username, id in following_usernames.items() %}
+              <form action="/unfollow?username={{ username }}" method="GET" class="list-group-item">
+                <div class="form-group">
+                  <li class="d-flex justify-content-between align-items-center">
+                    {{ username }}
+                    <input type="hidden" name="user_id" value="{{ id }}"></input>
+                    <button class="btn btn-danger" type="submit" name="id">Unfollow</button>
+                  </li>
+                </div>
+              </form>
+            {% endfor %}
+            </ul>
+          {% endif %}
         </div>
       </div>
     </div>
   </div
 </body>
+
+<script type="text/javascript">
+(function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        document.querySelectorAll('.btn').forEach(button => {
+          button.addEventListener('click', event => {
+            if(button.innerHTML === 'Follow') {
+              button.classList.remove('btn-info')
+              button.classList.add('btn-danger')
+              button.innerHTML = 'Unfollow'
+              button.parentNode.parentNode.parentNode.action = '/follow?username={{ username }}' + button.parentNode.parentNode.parentNode.action.split('=')[1]
+            } else {
+              button.classList.remove('btn-danger')
+              button.classList.add('btn-info')
+              button.innerHTML = 'Follow'
+              button.parentNode.parentNode.parentNode.action = '/unfollow?username=' + button.parentNode.parentNode.parentNode.action.split('=')[1]
+            }
+          })
+        })
+      }, false);
+    })();
+</script>
 {% endblock %}
