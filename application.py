@@ -1,5 +1,6 @@
 import os
 import sys
+import datetime
 
 from cs50 import SQL
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
@@ -273,3 +274,22 @@ def instruments():
 
 
     return render_template("instruments.html")
+
+
+@app.route("/video", methods=["GET", "POST"])
+def video():
+    videoId = request.args.get('video_id')
+
+    # only allow POST when user is logged in
+
+    if request.method == "POST":
+        if session['user_id']:
+            db.execute("INSERT INTO comments (user_id, video_id, date, message) VALUES(:user_id, :video_id, :date, :message)", user_id=session["user_id"], video_id=videoId, date=datetime.datetime.now(), message=request.form.get("comment"));
+
+    currentVideo = db.execute("SELECT video_name, video_id FROM video WHERE video_id = :video_id", video_id=videoId)[0];
+    comments = db.execute("SELECT * FROM comments JOIN users on comments.user_id = users.id WHERE comments.video_id = :video_id", video_id=videoId);
+
+
+    return render_template("video.html", video=currentVideo,comments=comments)
+
+
