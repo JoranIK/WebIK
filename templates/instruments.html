@@ -7,7 +7,6 @@ Instruments
 {% block main %}
         <div class="card" style="background-color: rgba(255,255,255,0.9)";>
           <div class="card-body">
-            <form action="/instruments" action="POST">
             <form action="/instruments" method="POST">
               <div class="form-row">
                 <div class="form-group col-md-6">
@@ -37,9 +36,18 @@ Instruments
         </div>
 
         {% for row in videos %}
-        <h1>{{ row["video_name"] }}</h1>
-        <iframe width="420" height="315"
-        src="https://www.youtube.com/embed/{{ row["video_id"] }}">
-        </iframe>
+        <!--<h1>{{ row["video_name"] }}</h1>-->
+        <!--<iframe width="420" height="315"-->
+        <!--src="https://www.youtube.com/embed/{{ row["video_id"] }}">-->
+        <!--</iframe>-->
+
+        <div class="card" style="width: 18rem;">
+          <img class="card-img-top img-thumbnail" src="https://i.ytimg.com/vi/{{ row["video_id"] }}/hqdefault.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{row ["video_name"] }}</h5>
+            <a href="/video?video_id={{row ["video_id"] }}" class="btn btn-primary">Watch video</a>
+          </div>
+        </div>
+
         {% endfor %}
 {% endblock %}
