@@ -117,7 +117,6 @@ def search():
         for item in userlist:
             if request.form.get("searchfield") in item['username']:
                 results[item['username']] = item['id']
-        print("Results: ", results, file=sys.stdout)
     return render_template("search.html", results=results, already_following=already_following)
 
 
@@ -134,10 +133,23 @@ def profile():
     user_info = db.execute("SELECT * FROM users WHERE id = :id",
                             id=session['user_id'])[0]
 
+    # als de gebruiker is ingelogd, maak een lijst met wie hij volgt
+    if session['user_id']:
+        master_list = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
+                                    slave_id=session['user_id'])
+        following = [ item['master_id'] for item in master_list ]
+        usernames_ids = db.execute("SELECT username, id FROM users")
+        following_usernames = dict()
+
+        for pair in usernames_ids:
+            for following_id in following:
+                if following_id == pair['id']:
+                    following_usernames[pair['username']] = following_id
+
     wants = [ item for item in user_info if user_info[item] == 'yes' and item.startswith('want')]
     knows = [ item for item in user_info if user_info[item] == 'yes' and item.startswith('know')]
 
-    return render_template("profile.html", user_info=user_info, wants=wants)
+    return render_template("profile.html", user_info=user_info, wants=wants, following_usernames=following_usernames)
 
 
 @app.route("/register", methods=["GET", "POST"])
