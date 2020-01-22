@@ -42,10 +42,17 @@
               {% endif %}
             </ul>
           </div>
+          {% if session.user_id %}
           <form class="form-inline" action="/search" method="POST">
-            <input class="form-control mr-sm-2" name="searchfield" type="search" placeholder="Search" aria-label="Search">
+            <input class="form-control mr-sm-2" name="searchfield" type="search" placeholder="Search for a user" aria-label="Search">
             <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="submit">Search</button>
           </form>
+          {% else %}
+          <form class="form-inline" action="/search" method="POST">
+            <input class="form-control mr-sm-2" name="searchfield" type="search" placeholder="Log in to search" aria-label="Search" disabled>
+            <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="submit" disabled>Search</button>
+          </form>
+          {% endif %}
           {% if not session.user_id %}
           <a href="/register" class="btn btn-info mr-2">Register</a>
           <div class="dropdown">
@@ -79,6 +86,12 @@
   </head>
 
     <body>
+      <div class="alert alert-warning alert-dismissible fade show" id="searchAlert" style="display: none;" role="alert">
+        Please log in before using the search function.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
       <main class="container p-5">
           {% block main %}{% endblock %}
       </main>
