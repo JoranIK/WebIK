@@ -18,7 +18,7 @@
 
     <form action="/video?video_id={{ video['video_id'] }}" method="post">
       <div class="form-group">
-        <input type="text" class="form-control" id="comment" name="comment" placeholder="My comment...">
+        <textarea class="form-control" rows="5" id="comment" name="comment" placeholder="My comment..."></textarea>
       </div>
       <button type="submit" class="btn btn-primary">Place comment</button>
     </form>
@@ -27,7 +27,7 @@
 
 
     {% for comment in comments %}
-    <div class="card">
+    <div class="card border-dark mb-3 mt-2">
       <div class="card-body">
         <h5 class="card-title">{{ comment["username"] }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{ comment["date"] }}</h6>
