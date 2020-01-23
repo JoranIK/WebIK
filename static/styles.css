@@ -4,6 +4,9 @@
     height: 300px !important;
 }
 
+.login_warning {
+    color: red;
+}
 
 body {
     background-image: url("instruments.jpg");
