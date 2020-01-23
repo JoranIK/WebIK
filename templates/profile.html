@@ -68,6 +68,21 @@
             </ul>
             </div>
           {% endif %}
+          <br>
+          {% if user_videos %}
+            <div>
+              <h5>Videos:</h5>
+              {% for row in user_videos %}
+                <div class="card" style="width: 18rem;">
+                  <img class="card-img-top img-thumbnail" src="https://i.ytimg.com/vi/{{ row["video_id"] }}/hqdefault.jpg" alt="Card image cap">
+                  <div class="card-body">
+                    <h5 class="card-title">{{row ["video_name"] }}</h5>
+                    <a href="/video?video_id={{row ["video_id"] }}" class="btn btn-primary">Watch video</a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
