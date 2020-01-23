@@ -6,19 +6,21 @@
 
 {% block main %}
 <body>
-  <div class="container" style="background-color: green;">
+  <div class="container" style="background-color:#8ad4f4; color:#0a5479;">
     <div class="row">
       <div class="col">
-        <div class="container mr-5" style="background-color: blue;">
+        <div class="container mr-5" style="background-color:blue;">
           {% if user_info['picture_url'] == None %}
-            <img src="/static/avatar.png" class="rounded-circle float-left" alt="Profile picture" width="20%" heigth="20%">
+            <img src="/static/avatar.png" class="rounded-circle float-left" alt="Profile picture" width="20%" heigth="20%" style="padding:10px;padding-left:0px;float:left;">
           {% else %}
-            <img src="{{ user_info['picture_url'] }}" class="rounded-circle float-left mr-5" alt="Profile picture" width="20%" heigth="20%">
+            <img src="{{ user_info['picture_url'] }}" class="rounded-circle float-left mr-5" alt="Profile picture" width="20%" heigth="20%" style="padding:10px;">
           {% endif %}
         </div>
-        <h1 class="display-4 text-center">{{ user_info['username'] }}</h1>
+        <h1 class="username">{{ user_info['username'] }}</h1>
         <hr>
-        <div class="ml-1">
+        <div class="ml-1" style="padding:10px;">
+          <h6>Name : <br>City : <br>Birthday :</h6>
+          <br><br><br>
           {% if wants %}
           <h5>Learning: </h5>
           <ul class="list-group list-group-flush">
@@ -47,7 +49,10 @@
               {% endfor %}
             </ul>
           {% endif %}
+          <br>
           {% if following_usernames %}
+            <div>
+            <h5>Following:</h5>
             <ul class="list-group list-group-flush">
             {% for username, id in following_usernames.items() %}
               <form action="/unfollow?username={{ username }}" method="GET" class="list-group-item">
@@ -61,11 +66,12 @@
               </form>
             {% endfor %}
             </ul>
+            </div>
           {% endif %}
         </div>
       </div>
     </div>
-  </div
+  </div>
 </body>
 
 <script type="text/javascript">
