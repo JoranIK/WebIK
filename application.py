@@ -229,7 +229,7 @@ def register():
                    username=request.form.get("username"), password=generate_password_hash(request.form.get("password"), method='pbkdf2:sha256', salt_length=8), want_guitar=want_guitar,  know_guitar=know_guitar, want_electric_guitar=want_electric_guitar, know_electric_guitar=know_electric_guitar, want_piano=want_piano, know_piano=know_piano, want_drums=want_drums, know_drums=know_drums)
 
         # return to homepage
-        return redirect("/")
+        return render_template("register1.html")
 
     # User reached route via GET (as by clicking a link or via redirect)
     return render_template("register.html")
