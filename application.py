@@ -61,17 +61,15 @@ def upload():
 @login_required
 def follow():
 
-    # state the id's. the logged in user is the slave
+    # stel de id's vast. De ingelogde user is de slave.
     master_id = request.args.get("user_id")
     slave_id = session['user_id']
 
-    # ======================== WEGHALEN ALS ALLES NOG WERKT AAN HET EIND ====================
-    # db_followers = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
-    #                                 slave_id=slave_id)
-    # already_following = [ item['master_id'] for item in db_followers ]
-    # ======================== WEGHALEN ALS ALLES NOG WERKT AAN HET EIND ====================
+    db_followers = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
+                                    slave_id=slave_id)
 
-    # if the slave does not follow the master yet, create database row
+    already_following = [ item['master_id'] for item in db_followers ]
+
     exists = db.execute("SELECT master_id, slave_id FROM followers WHERE master_id = :master_id AND slave_id = :slave_id",
                         master_id=master_id, slave_id=slave_id)
     if not exists:
@@ -89,14 +87,11 @@ def unfollow():
     master_id = request.args.get("user_id")
     slave_id = session['user_id']
 
-    # ======================== WEGHALEN ALS ALLES NOG WERKT AAN HET EIND ====================
-    # db_followers = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
-    #                                 slave_id=slave_id)
-    #
-    # already_following = [ item['master_id'] for item in db_followers ]
-    # ======================== WEGHALEN ALS ALLES NOG WERKT AAN HET EIND ====================
+    db_followers = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
+                                    slave_id=slave_id)
 
-    # if the slave-master row exists, delete it
+    already_following = [ item['master_id'] for item in db_followers ]
+
     exists = db.execute("SELECT master_id, slave_id FROM followers WHERE master_id = :master_id AND slave_id = :slave_id",
                         master_id=master_id, slave_id=slave_id)
     if exists:
@@ -109,22 +104,19 @@ def unfollow():
 @app.route("/search", methods=["GET","POST"])
 def search():
 
-    # make a list of users
+    # maak een lijst met users
     userlist = db.execute("SELECT username, id FROM users")
+    results = dict()
 
-    # if the user is logged in, get a list of who he's following
     if session['user_id']:
         db_followers = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
                                         slave_id=session['user_id'])
         already_following = [ item['master_id'] for item in db_followers ]
 
-    # filter the userlist to match the user's search
-    results = dict()
     if request.method == "POST":
         for item in userlist:
             if request.form.get("searchfield") in item['username']:
                 results[item['username']] = item['id']
-
     return render_template("search.html", results=results, already_following=already_following)
 
 
@@ -135,31 +127,31 @@ def logout():
 
     return render_template("logout.html")
 
-
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
 
     user_info = db.execute("SELECT * FROM users WHERE id = :id",
                             id=session['user_id'])[0]
 
-    # if the user is logged in, make a list of who he's following
+    user_videos = db.execute("SELECT * FROM video WHERE id = :id",
+                             id=session["user_id"])
+    # als de gebruiker is ingelogd, maak een lijst met wie hij volgt
     if session['user_id']:
         master_list = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
                                     slave_id=session['user_id'])
         following = [ item['master_id'] for item in master_list ]
         usernames_ids = db.execute("SELECT username, id FROM users")
-
-        # pair the usernames with the user id's
         following_usernames = dict()
+
         for pair in usernames_ids:
             for following_id in following:
                 if following_id == pair['id']:
                     following_usernames[pair['username']] = following_id
 
-    knows = [ item for item in user_info if user_info[item] == 'yes' and item.startswith('know')]
     wants = [ item for item in user_info if user_info[item] == 'yes' and item.startswith('want')]
+    knows = [ item for item in user_info if user_info[item] == 'yes' and item.startswith('know')]
 
-    return render_template("profile.html", user_info=user_info, wants=wants, following_usernames=following_usernames)
+    return render_template("profile.html", user_info=user_info, wants=wants, following_usernames=following_usernames, user_videos=user_videos)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -236,6 +228,7 @@ def register():
         db.execute("INSERT INTO users (username, password, want_guitar, know_guitar, want_electric_guitar, know_electric_guitar, want_piano, know_piano, want_drums, know_drums) VALUES(:username, :password, :want_guitar, :know_guitar, :want_electric_guitar, :know_electric_guitar, :want_piano, :know_piano, :want_drums, :know_drums)",
                    username=request.form.get("username"), password=generate_password_hash(request.form.get("password"), method='pbkdf2:sha256', salt_length=8), want_guitar=want_guitar,  know_guitar=know_guitar, want_electric_guitar=want_electric_guitar, know_electric_guitar=know_electric_guitar, want_piano=want_piano, know_piano=know_piano, want_drums=want_drums, know_drums=know_drums)
 
+        # return to homepage
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -283,10 +276,10 @@ def login():
 def instruments():
 
     if request.method == "POST":
+
         instrument = request.form.get("instruments-select")
         skill_level = request.form.get("level-select")
 
-        # retrieve videos that match the search criteria
         videos = db.execute("SELECT * FROM video WHERE instrument = :instrument AND skill_level = :skill_level",
                             instrument=instrument, skill_level=skill_level)
 
@@ -295,41 +288,6 @@ def instruments():
 
 
     return render_template("instruments.html")
-
-
-@app.route("/usercheck", methods=["GET"])
-def usercheck():
-
-    # make a list of existing usernames
-    usernames = db.execute("SELECT username FROM users")
-    taken_names = [ item['username'] for item in usernames ]
-
-    # request the users input
-    username = request.args.get('username')
-    password = request.args.get('password')
-
-    # check if the password of given username is correct with the given password
-    db_password = db.execute("SELECT password FROM users WHERE username = :username",
-                            username=username)
-    if len(db_password) == 1:
-        pw_check = check_password_hash(db_password[0]["password"], password)
-
-    # define error codes
-    error_code = '13'
-    if len(username) == 0 and len(password) == 0:
-        error_code = '13'
-    elif len(username) == 0:
-        error_code = '19'
-    elif len(password) == 0:
-        error_code = '93'
-    elif username not in taken_names:
-        error_code = '29'
-    elif not pw_check:
-        error_code = '94'
-    else:
-        error_code = '99'
-
-    return error_code
 
 
 @app.route("/video", methods=["GET", "POST"])
@@ -347,3 +305,5 @@ def video():
 
 
     return render_template("video.html", video=currentVideo,comments=comments)
+
+

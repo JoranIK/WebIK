@@ -58,4 +58,9 @@ right_position{
 .bold{
     font-weight: bold;
 }
-
+.username{
+    font-weight: bold;
+    text-align: center;
+    color: #0a5479;
+    padding-right:190px;
+}
