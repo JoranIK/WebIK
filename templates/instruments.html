@@ -36,8 +36,7 @@ Instruments
         </div>
 
         {% for row in videos %}
-        <div class="card-deck" style="width: 18rem;">
-          <div class="card">
+          <div class="card mt-2" style="width: 18rem;">
             <img class="card-img-top img-thumbnail" src="https://i.ytimg.com/vi/{{ row["video_id"] }}/hqdefault.jpg" alt="Card image cap">
             <div class="card-body">
               <h5 class="card-title">{{row ["video_name"] }}</h5>
