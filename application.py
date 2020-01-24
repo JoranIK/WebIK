@@ -53,7 +53,7 @@ def upload():
         db.execute("INSERT INTO video (id, video_id, video_name, instrument, skill_level) VALUES (:user_id, :video_id, :video_name, :instrument, :skill_level)",
                     user_id=user_id, video_id=video_id, video_name=video_name, instrument=instrument, skill_level=skill_level)
 
-        return redirect ("/")
+        return render_template ("upload1.html")
     return render_template("upload.html")
 
 
