@@ -68,12 +68,26 @@
                   <label for="passwordDropdown">Password</label>
                   <input type="password" name="password" class="form-control" id="passwordDropdown" placeholder="Password">
                 </div>
-                <button type="submit" class="btn btn-success">Login</button>
-                <br><br>
+                <button type="submit" id="loginSubmit" class="btn btn-success">Login</button>
                 <div id="signupLink">
                   <a href="/register">
                     No account? Sign up here!
                   </a>
+                </div>
+                <div id="29" style="display: none;">
+                  <p class="login_warning">Username does not exist</p>
+                </div>
+                <div id="19" style="display: none;">
+                  <p class="login_warning">Please enter your username</p>
+                </div>
+                <div id="93" style="display: none;">
+                  <p class="login_warning">Please enter your password</p>
+                </div>
+                <div id="13" style="display: none;">
+                  <p class="login_warning">Did you even try?</p>
+                </div>
+                <div id="94" style="display: none;">
+                  <p class="login_warning">Incorrect password</p>
                 </div>
               </form>
           </div>
@@ -86,12 +100,6 @@
   </head>
 
     <body>
-      <div class="alert alert-warning alert-dismissible fade show" id="searchAlert" style="display: none;" role="alert">
-        Please log in before using the search function.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
       <main class="container p-5">
           {% block main %}{% endblock %}
       </main>
@@ -99,14 +107,76 @@
 </html>
 
 <script type="text/javascript">
-    var loginButton = document.getElementById('loginBtn');
-    var loginFormDropdown = document.getElementById('loginFormDropdown')
-    loginButton.onclick = function() {
-      // document.getElementById('loginFormDropdown').style.display='block';
-      if (loginFormDropdown.style.display === 'none') {
-        loginFormDropdown.style.display = 'block'
-      } else {
-        loginFormDropdown.style.display='none';
-      }
-    }
+        (function() {
+          'use strict';
+          window.addEventListener('load', function() {
+            console.log('window load')
+            var loginButton = document.getElementById('loginBtn');
+            var loginFormDropdown = document.getElementById('loginFormDropdown')
+            loginButton.onclick = function() {
+              console.log('drowdown click')
+              // document.getElementById('loginFormDropdown').style.display='block';
+              if (loginFormDropdown.style.display === 'none') {
+                loginFormDropdown.style.display = 'block'
+              } else {
+                loginFormDropdown.style.display='none';
+              }
+            }
+            console.log('after dropdown')
+            var loginFormDropdown = document.getElementById('loginFormDropdown')
+            loginSubmit.onclick = function(event){
+                var username_input = $('input[name="username"]').val();
+                var password_input = $('input[name="password"]').val();
+                console.log('variables')
+                $.get({
+                    async: false,
+                    dataType: "json",
+                    url:"/usercheck?username=" + username_input + "&password=" + password_input,
+                    success: function( data ) {
+                        if (data === 29){
+                            $('div[id="29"]').css('display', 'block');
+                            $('div[id="19"]').css('display', 'none');
+                            $('div[id="93"]').css('display', 'none');
+                            $('div[id="13"]').css('display', 'none');
+                            $('div[id="94"]').css('display', 'none');
+                            event.preventDefault();
+                            event.stopPropagation();
+                        } else if (data === 19){
+                            $('div[id="29"]').css('display', 'none');
+                            $('div[id="19"]').css('display', 'block');
+                            $('div[id="93"]').css('display', 'none');
+                            $('div[id="13"]').css('display', 'none');
+                            $('div[id="94"]').css('display', 'none');
+                            event.preventDefault();
+                            event.stopPropagation();
+                        } else if (data === 93){
+                            $('div[id="29"]').css('display', 'none');
+                            $('div[id="19"]').css('display', 'none');
+                            $('div[id="93"]').css('display', 'block');
+                            $('div[id="13"]').css('display', 'none');
+                            $('div[id="94"]').css('display', 'none');
+                            event.preventDefault();
+                            event.stopPropagation();
+                        } else if (data === 13){
+                            $('div[id="29"]').css('display', 'none');
+                            $('div[id="19"]').css('display', 'none');
+                            $('div[id="93"]').css('display', 'none');
+                            $('div[id="13"]').css('display', 'block');
+                            $('div[id="94"]').css('display', 'none');
+                            event.preventDefault();
+                            event.stopPropagation();
+                        } else if (data === 94){
+                            $('div[id="29"]').css('display', 'none');
+                            $('div[id="19"]').css('display', 'none');
+                            $('div[id="93"]').css('display', 'none');
+                            $('div[id="13"]').css('display', 'none');
+                            $('div[id="94"]').css('display', 'block');
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                    }
+                });
+            };
+          }, false);
+        })();
 </script>

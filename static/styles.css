@@ -4,6 +4,9 @@
     height: 300px !important;
 }
 
+.login_warning {
+    color: red;
+}
 
 body {
     background-image: url("instruments.jpg");
@@ -56,9 +59,3 @@ right_position{
     font-weight: bold;
 }
 
-.username{
-    font-weight: bold;
-    text-align: center;
-    color: #0a5479;
-    padding-right:190px;
-}
