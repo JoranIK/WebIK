@@ -11,7 +11,7 @@ Register
         <h2>Register</h2>
       </div>
       <div class="card-body">
-        <form action="/register" method="post">
+        <form action="/register" method="post" id="registerForm" autocomplete="off">
             <fieldset>
                 <div class="form-group">
                   <label for="usernameInput">Username</label>
@@ -29,8 +29,6 @@ Register
                     <button class="btn btn-primary" type="submit">Register</button>
                 </div>
             </fieldset>
-
-
       </div>
     </div>
     <div class="card">
@@ -119,4 +117,18 @@ Register
     </div>
     </form>
   </div>
+
+  <script type="text/javascript">
+          (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+              var usernameInput = document.getElementById("usernameInput")
+              var passwordInput = document.getElementById("passwordInput")
+              var confirmationInput = document.getElementById("confirmationInput")
+              usernameInput.clear();
+              passwordInput.clear();
+              confirmationInput.clear();
+              }, false);
+          })();
+  </script>
 {% endblock %}
