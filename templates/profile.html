@@ -60,7 +60,7 @@
                   <li class="d-flex justify-content-between align-items-center">
                     {{ username }}
                     <input type="hidden" name="user_id" value="{{ id }}"></input>
-                    <button class="btn btn-danger" type="submit" name="id">Unfollow</button>
+                    <button class="btn btn-danger follow-button" type="submit" name="id">Unfollow</button>
                   </li>
                 </div>
               </form>
@@ -93,7 +93,7 @@
 (function() {
       'use strict';
       window.addEventListener('load', function() {
-        document.querySelectorAll('.btn').forEach(button => {
+        document.querySelectorAll('.follow-button').forEach(button => {
           button.addEventListener('click', event => {
             if(button.innerHTML === 'Follow') {
               button.classList.remove('btn-info')
