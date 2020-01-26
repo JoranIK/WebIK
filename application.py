@@ -290,6 +290,41 @@ def instruments():
     return render_template("instruments.html")
 
 
+@app.route("/usercheck", methods=["GET"])
+def usercheck():
+
+    # make a list of existing usernames
+    usernames = db.execute("SELECT username FROM users")
+    taken_names = [ item['username'] for item in usernames ]
+
+    # request the users input
+    username = request.args.get('username')
+    password = request.args.get('password')
+
+    # check if the password of given username is correct with the given password
+    db_password = db.execute("SELECT password FROM users WHERE username = :username",
+                            username=username)
+    if len(db_password) == 1:
+        pw_check = check_password_hash(db_password[0]["password"], password)
+
+    # define error codes
+    error_code = '13'
+    if len(username) == 0 and len(password) == 0:
+        error_code = '13'
+    elif len(username) == 0:
+        error_code = '19'
+    elif len(password) == 0:
+        error_code = '93'
+    elif username not in taken_names:
+        error_code = '29'
+    elif not pw_check:
+        error_code = '94'
+    else:
+        error_code = '99'
+
+    return error_code
+
+
 @app.route("/video", methods=["GET", "POST"])
 def video():
     videoId = request.args.get('video_id')
@@ -305,5 +340,3 @@ def video():
 
 
     return render_template("video.html", video=currentVideo,comments=comments)
-
-
