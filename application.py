@@ -149,7 +149,6 @@ def profile():
                     following_usernames[pair['username']] = following_id
 
     wants = [ item for item in user_info if user_info[item] == 'yes' and item.startswith('want')]
-    knows = [ item for item in user_info if user_info[item] == 'yes' and item.startswith('know')]
 
     return render_template("profile.html", user_info=user_info, wants=wants, following_usernames=following_usernames, user_videos=user_videos)
 
@@ -206,30 +205,9 @@ def register():
         else:
             want_drums = "no"
 
-        # set yes if user knows instrument
-        if request.form.get("know-guitar") == "on":
-            know_guitar = "yes"
-        else:
-            know_guitar = "no"
-
-        if request.form.get("know-electric-guitar") == "on":
-            know_electric_guitar = "yes"
-        else:
-            know_electric_guitar = "no"
-
-        if request.form.get("know-piano") == "on":
-            know_piano = "yes"
-        else:
-            know_piano = "no"
-
-        if request.form.get("know-drums") == "on":
-            know_drums = "yes"
-        else:
-            know_drums = "no"
-
         # inserts data into database, and hashes password
-        db.execute("INSERT INTO users (username, password, want_guitar, know_guitar, want_electric_guitar, know_electric_guitar, want_piano, know_piano, want_drums, know_drums, email) VALUES(:username, :password, :want_guitar, :know_guitar, :want_electric_guitar, :know_electric_guitar, :want_piano, :know_piano, :want_drums, :know_drums, :email)",
-                   username=request.form.get("username"), password=generate_password_hash(request.form.get("password"), method='pbkdf2:sha256', salt_length=8), want_guitar=want_guitar,  know_guitar=know_guitar, want_electric_guitar=want_electric_guitar, know_electric_guitar=know_electric_guitar, want_piano=want_piano, know_piano=know_piano, want_drums=want_drums, know_drums=know_drums, email=request.form.get("email"))
+        db.execute("INSERT INTO users (username, password, want_guitar, want_electric_guitar, want_piano, want_drums, email) VALUES(:username, :password, :want_guitar, :want_electric_guitar, :want_piano, :want_drums, :email)",
+                   username=request.form.get("username"), password=generate_password_hash(request.form.get("password"), method='pbkdf2:sha256', salt_length=8), want_guitar=want_guitar, want_electric_guitar=want_electric_guitar, want_piano=want_piano, want_drums=want_drums, email=request.form.get("email"))
 
         # return to homepage
         return render_template("register1.html")
