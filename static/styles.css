@@ -4,6 +4,10 @@
     height: 300px !important;
 }
 
+.inline {
+  display: inline;
+}
+
 .login_warning {
     color: red;
 }

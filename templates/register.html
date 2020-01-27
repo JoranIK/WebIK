@@ -10,73 +10,74 @@ Register
       <div class="card-header">
         <h2>Register</h2>
       </div>
-      <div class="card-body">
-        <form action="/register" method="post" id="registerForm" autocomplete="off">
-            <fieldset>
-                <div class="form-group">
-                  <label for="usernameInput">Username</label>
-                  <input autocomplete="off" autofocus class="form-control" id="usernameInput" name="username" placeholder="Username" type="text">
-                </div>
-                <div class="form-group">
-                  <label for="emailInput">Email address</label>
-                  <input autocomplete="off" autofocus class="form-control" id="emailInput" name="email" placeholder="yourname@mail.com" type="email">
-                </div>
-                <div class="form-group">
-                    <label for="passwordInput">Password</label>
-                    <input class="form-control" id="passwordInput" name="password" placeholder="Password" type="password">
-                </div>
-                <div class="form-group">
-                    <label for="confirmationInput">Confirm your password</label>
-                    <input class="form-control" id="confirmationInput" name="confirmation" placeholder="Password (again)" type="password">
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" type="submit">Register</button>
-                </div>
-            </fieldset>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <h2>I want to learn: </h2>
-      </div>
-      <div class="card-body">
-        <div class="text">
-          Select up to four:
-        </div>
-        <div class="input-group mb-5 mt-2">
-          <div class="input-group-prepend">
-            <div class="input-group-text">
-              <input type="checkbox" name="want-guitar" id="want-guitar">
-            </div>
-          </div>
-          <label type="text" class="btn-outline-info form-control"><h6>Guitar</h6></label>
-        </div>
-        <div class="input-group mb-5 mt-2">
-          <div class="input-group-prepend">
-            <div class="input-group-text">
-              <input type="checkbox" name="want-electric-guitar" id="want-electric-guitar">
-            </div>
-          </div>
-          <label type="text" class="btn-outline-info form-control"><h6>Electric Guitar</h6></label>
-        </div>
-        <div class="input-group mb-5 mt-2">
-          <div class="input-group-prepend">
-            <div class="input-group-text">
-              <input type="checkbox" name="want-piano" id="want-piano">
-            </div>
-          </div>
-          <label type="text" class="btn-outline-info form-control"><h6>Piano</h6></label>
-        </div>
-        <div class="input-group mb-5 mt-2">
-          <div class="input-group-prepend">
-            <div class="input-group-text">
-              <input type="checkbox" name="want-drums" id="want-drums">
-            </div>
-          </div>
-          <label type="text" class="btn-outline-info form-control"><h6>Drums</h6></label>
+      <form action="/register" method="post" id="registerForm" autocomplete="off">
+        <div class="card-body">
+              <fieldset>
+                  <div class="form-group">
+                    <label for="usernameInput">Username</label>
+                    <input autocomplete="no" autofocus class="form-control" id="registerUsernameInput" name="username" placeholder="Username" type="text">
+                  </div>
+                  <div class="form-group">
+                    <label for="emailInput">Email address</label>
+                    <input autocomplete="no" class="form-control" id="registerEmailInput" name="email" placeholder="yourname@mail.com" type="email">
+                  </div>
+                  <div class="form-group">
+                      <label for="passwordInput">Password</label>
+                      <input autocomplete="no" class="form-control" id="registerPasswordInput" name="password" placeholder="Password" type="password">
+                  </div>
+                  <div class="form-group">
+                      <label for="confirmationInput">Confirm your password</label>
+                      <input class="form-control" id="registerConfirmationInput" name="confirmation" placeholder="Password (again)" type="password">
+                  </div>
+                  <div class="form-group">
+                      <button class="btn btn-primary" type="submit" id="registerSubmit">Register</button>
+                      <p class="login_warning float-right inline" style="display: none;" id="register_warning">Something went wrong</p>
+                  </div>
+              </fieldset>
         </div>
       </div>
-    </div>
+      <div class="card">
+        <div class="card-header">
+          <h2>I want to learn: </h2>
+        </div>
+        <div class="card-body">
+          <div class="text">
+            Select up to four:
+          </div>
+          <div class="input-group mb-5 mt-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <input type="checkbox" name="want-guitar" id="want-guitar">
+              </div>
+            </div>
+            <label type="text" class="btn-outline-info form-control"><h6>Guitar</h6></label>
+          </div>
+          <div class="input-group mb-5 mt-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <input type="checkbox" name="want-electric-guitar" id="want-electric-guitar">
+              </div>
+            </div>
+            <label type="text" class="btn-outline-info form-control"><h6>Electric Guitar</h6></label>
+          </div>
+          <div class="input-group mb-5 mt-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <input type="checkbox" name="want-piano" id="want-piano">
+              </div>
+            </div>
+            <label type="text" class="btn-outline-info form-control"><h6>Piano</h6></label>
+          </div>
+          <div class="input-group mb-5 mt-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <input type="checkbox" name="want-drums" id="want-drums">
+              </div>
+            </div>
+            <label type="text" class="btn-outline-info form-control"><h6>Drums</h6></label>
+          </div>
+        </div>
+      </div>
     </form>
   </div>
 
@@ -84,12 +85,53 @@ Register
           (function() {
             'use strict';
             window.addEventListener('load', function() {
-              var usernameInput = document.getElementById("usernameInput")
-              var passwordInput = document.getElementById("passwordInput")
-              var confirmationInput = document.getElementById("confirmationInput")
-              usernameInput.clear();
-              passwordInput.clear();
-              confirmationInput.clear();
+
+              // var registerUsernameInput = document.getElementById("registerUsernameInput")
+              // var passwordInput = document.getElementById("regiserPasswordInput")
+              // var confirmationInput = document.getElementById("registerConfirmationInput")
+              // registerUsernameInput.value == "";
+              // passwordInput.value == "";
+              // confirmationInput.value == "";
+
+              var registerSubmit = document.getElementById("registerSubmit")
+              registerSubmit.onclick = function(event){
+                  var username_input = $('input[id="registerUsernameInput"]').val();
+                  var email_input = $('input[id="registerEmailInput"]').val();
+                  var password_input = $('input[id="registerPasswordInput"]').val();
+                  var confirmation_input = $('input[id="registerConfirmationInput"]').val();
+                  $.get({
+                      async: false,
+                      dataType: "json",
+                      url:"/registercheck?username=" + username_input,
+                      success: function( data ) {
+                          if (!data){
+                              $('p[id="register_warning"]').css('display', 'block');
+                              document.getElementById("register_warning").innerHTML = "Username is already taken";
+                              event.preventDefault();
+                              event.stopPropagation();
+                          }
+                          else if (email_input === "") {
+                            $('p[id="register_warning"]').css('display', 'block');
+                            document.getElementById("register_warning").innerHTML = "Please fill in your email";
+                            event.preventDefault();
+                            event.stopPropagation();
+                          }
+                          else if (password_input === "") {
+                            $('p[id="register_warning"]').css('display', 'block');
+                            document.getElementById("register_warning").innerHTML = "Please choose a password";
+                            event.preventDefault();
+                            event.stopPropagation();
+                          }
+                          if (password_input != confirmation_input) {
+                            $('p[id="register_warning"]').css('display', 'block');
+                            document.getElementById("register_warning").innerHTML = "Passwords don't match";
+                            event.preventDefault();
+                            event.stopPropagation();
+                          }
+                      }
+                  });
+              };
+
               }, false);
           })();
   </script>
