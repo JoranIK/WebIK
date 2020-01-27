@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ user_info['username'] }}'s Profile
+{% endblock %}
+
+{% block main %}
+<body>
+  <div class="container" style="background-color:#8ad4f4; color:#0a5479;">
+    <div class="row">
+      <div class="col">
+        <div class="d-flex">
+          <h1 class="username p-2 flex-fill mt-3 display-4">{{ user_info['username'] }}</h1>
+        </div>
+        <hr>
+        <div class="d-flex">
+          <div class="flex-shrink-1 mr-2" style="display: inline;">
+            {% if user_info['picture_url'] == None %}
+              <img src="/static/avatar.png" class="rounded-circle" alt="Profile picture" style="width: 200px; heigth: 200px;">
+            {% else %}
+              <img src="{{ user_info['picture_url'] }}" class="rounded-circle" alt="Profile picture" style="width: 200px; heigth: 200px;">
+            {% endif %}
+          </div>
+          <div class="p-2 w-100 flex-grow-1">
+            <form action="/profileeditor" method="POST">
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <input class="form-control" type="text" name="name" placeholder="Your name">
+              </div>
+              <div class="form-group">
+                <label for="name">City:</label>
+                <input class="form-control" type="text" name="city" placeholder="Your city">
+              </div>
+              <div class="form-group">
+                <label for="name">Birthday:</label>
+                <input class="form-control" type="text" name="birthday" placeholder="Your birthday">
+              </div>
+              <div class="form-group">
+                <label for="name">Picture url:</label>
+                <input class="form-control" type="text" name="picture_url" placeholder="A link to a picture ending with '.png' or '.jpg'">
+              </div>
+              <div class="form-group">
+                <label for="name">Description:</label>
+                <textarea class="form-control" name="description" placeholder="A personal description" rows="3"></textarea>
+              </div>
+              <button class="btn btn-dark mt-4 mb-3" type="submit" name="editProfileBtn" id="editProfileBtn">Apply changes</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+{% endblock %}

@@ -183,6 +183,35 @@ def profile():
     return render_template("profile.html", user_info=user_info, wants=wants, following_usernames=following_usernames, user_videos=user_videos)
 
 
+@app.route("/profileeditor", methods=["GET", "POST"])
+def profileeditor():
+
+    user_info = db.execute("SELECT * FROM users WHERE id = :id",
+                            id=session['user_id'])[0]
+    if request.method == "POST":
+        name = request.form.get("name")
+        if name == "":
+            name = user_info['name']
+        city = request.form.get("city")
+        if city == "":
+            city = user_info['city']
+        birthday = request.form.get("birthday")
+        if birthday == "":
+            birthday = user_info['birthday']
+        picture_url = request.form.get("picture_url")
+        if picture_url == "":
+            picture_url = user_info['picture_url']
+        description = request.form.get("description")
+        if description == "":
+            description = user_info['description']
+
+        db.execute("UPDATE users set name = :name, city = :city, birthday = :birthday, picture_url = :picture_url, description = :description WHERE id = :id",
+                    name=name, city=city, birthday=birthday, picture_url=picture_url, description=description, id=session['user_id'])
+
+        return redirect("/profile")
+
+    return render_template("/profileeditor.html", user_info=user_info)
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
@@ -286,6 +315,7 @@ def login():
 @app.route("/instruments", methods=["GET", "POST"])
 def instruments():
 
+    # user reached via POST
     if request.method == "POST":
 
         instrument = request.form.get("instruments-select")
@@ -300,7 +330,7 @@ def instruments():
 
         return render_template("instruments.html", videos=videos)
 
-
+    # user reached via GET
     return render_template("instruments.html")
 
 
@@ -312,8 +342,6 @@ def registercheck():
     taken_names = [ item['username'] for item in usernames ]
 
     username = request.args.get('username')
-    print("username: ", username, file=sys.stdout)
-    print("taken: ", taken_names, file=sys.stdout)
     if username in taken_names:
         available = 'false'
     else:
