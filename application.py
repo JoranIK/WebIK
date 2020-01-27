@@ -168,6 +168,9 @@ def register():
         if not request.form.get("username"):
             return apology("Username can not be empty", 400)
 
+        if not request.form.get("email"):
+            return apology("Email can not be empty", 400)
+
         # checks if username is available
         rows = db.execute("SELECT * FROM users WHERE username = :username",
                           username=request.form.get("username"))
@@ -225,8 +228,8 @@ def register():
             know_drums = "no"
 
         # inserts data into database, and hashes password
-        db.execute("INSERT INTO users (username, password, want_guitar, know_guitar, want_electric_guitar, know_electric_guitar, want_piano, know_piano, want_drums, know_drums) VALUES(:username, :password, :want_guitar, :know_guitar, :want_electric_guitar, :know_electric_guitar, :want_piano, :know_piano, :want_drums, :know_drums)",
-                   username=request.form.get("username"), password=generate_password_hash(request.form.get("password"), method='pbkdf2:sha256', salt_length=8), want_guitar=want_guitar,  know_guitar=know_guitar, want_electric_guitar=want_electric_guitar, know_electric_guitar=know_electric_guitar, want_piano=want_piano, know_piano=know_piano, want_drums=want_drums, know_drums=know_drums)
+        db.execute("INSERT INTO users (username, password, want_guitar, know_guitar, want_electric_guitar, know_electric_guitar, want_piano, know_piano, want_drums, know_drums, email) VALUES(:username, :password, :want_guitar, :know_guitar, :want_electric_guitar, :know_electric_guitar, :want_piano, :know_piano, :want_drums, :know_drums, :email)",
+                   username=request.form.get("username"), password=generate_password_hash(request.form.get("password"), method='pbkdf2:sha256', salt_length=8), want_guitar=want_guitar,  know_guitar=know_guitar, want_electric_guitar=want_electric_guitar, know_electric_guitar=know_electric_guitar, want_piano=want_piano, know_piano=know_piano, want_drums=want_drums, know_drums=know_drums, email=request.form.get("email"))
 
         # return to homepage
         return render_template("register1.html")
