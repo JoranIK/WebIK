@@ -256,6 +256,7 @@ def login():
 @app.route("/instruments", methods=["GET", "POST"])
 def instruments():
 
+    # user reached via POST
     if request.method == "POST":
 
         instrument = request.form.get("instruments-select")
@@ -267,7 +268,7 @@ def instruments():
 
         return render_template("instruments.html", videos=videos)
 
-
+    # user reached via GET
     return render_template("instruments.html")
 
 
