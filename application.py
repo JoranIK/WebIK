@@ -264,6 +264,9 @@ def instruments():
         videos = db.execute("SELECT * FROM video WHERE instrument = :instrument AND skill_level = :skill_level",
                             instrument=instrument, skill_level=skill_level)
 
+        if not videos:
+            return render_template("instruments1.html")
+
 
         return render_template("instruments.html", videos=videos)
 
