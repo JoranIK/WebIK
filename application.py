@@ -56,6 +56,36 @@ def upload():
         return render_template ("upload1.html")
     return render_template("upload.html")
 
+@app.route("/like", methods=["GET"])
+@login_required
+def like():
+
+    video_id = request.args.get("video_id")
+    liker_id = session["user_id"]
+    video_info = db.execute("SELECT * FROM video WHERE video_id=:video_id",
+                           video_id=video_id)
+    print(video_info)
+    poster_id = video_info[0]["id"]
+    instrument = video_info[0]["instrument"]
+
+    # change like in database for instrument
+    if instrument == "Piano":
+        db.execute("UPDATE users SET likes_piano = likes_piano + 1 WHERE id=:poster_id",
+                   poster_id=poster_id)
+    if instrument == "Drum":
+        db.execute("UPDATE users SET likes_drum = likes_drum + 1 WHERE id=:poster_id",
+                   poster_id=poster_id)
+    if instrument == "Guitar":
+        db.execute("UPDATE users SET likes_guitar = likes_guitar + 1 WHERE id=:poster_id",
+                   poster_id=poster_id)
+    if instrument == "Electric-guitar":
+        db.execute("UPDATE users SET likes_electric_guitar = likes_electric_guitar + 1 WHERE id=:poster_id",
+                   poster_id=poster_id)
+
+    db.execute("INSERT INTO likes (poster_id, video_id, liker_id) VALUES (:poster_id, :video_id, :liker_id)",
+               poster_id=poster_id, video_id=video_id, liker_id=liker_id)
+
+    return '', 204
 
 @app.route("/follow", methods=["GET"])
 @login_required
