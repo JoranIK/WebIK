@@ -271,6 +271,23 @@ def instruments():
     return render_template("instruments.html")
 
 
+@app.route("/registercheck", methods=["GET"])
+def registercheck():
+
+    # make a list of existing usernames
+    usernames = db.execute("SELECT username FROM users")
+    taken_names = [ item['username'] for item in usernames ]
+
+    username = request.args.get('username')
+    print("username: ", username, file=sys.stdout)
+    print("taken: ", taken_names, file=sys.stdout)
+    if username in taken_names:
+        available = 'false'
+    else:
+        available = 'true'
+
+    return available
+
 @app.route("/usercheck", methods=["GET"])
 def usercheck():
 
