@@ -5,6 +5,12 @@
 {% endblock %}
 
 {% block main %}
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    </head>
 
     <h1>{{ video["video_name"] }}</h1>
     <div class="embed-responsive embed-responsive-16by9">
@@ -25,8 +31,13 @@
     <form action="/like?video_id={{ video['video_id'] }}" method="get">
                     <input type="hidden" name="video_id" value="{{ video['video_id'] }}"></input>
 
-      <button type="submit" class="btn btn-primary">
-        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> LIKE!</button>
+      <a href="#" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-thumbs-up align-right"></span> Like
+      </a>
+      <a href="#" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-thumbs-down"></span> Unlike
+      </a>
+
     </form>
 
     {% endif %}
