@@ -9,40 +9,18 @@
   <div class="container" style="background-color:#8ad4f4; color:#0a5479;">
     <div class="row">
       <div class="col">
-        <div class="d-flex">
-          <h1 class="username p-2 flex-fill mt-3 display-4">{{ user_info['username'] }}</h1>
+        <div class="container mr-5" style="background-color:blue;">
+          {% if user_info['picture_url'] == None %}
+            <img src="/static/avatar.png" class="rounded-circle float-left" alt="Profile picture" width="20%" heigth="20%" style="padding:10px;padding-left:0px;float:left;">
+          {% else %}
+            <img src="{{ user_info['picture_url'] }}" class="rounded-circle float-left mr-5" alt="Profile picture" width="20%" heigth="20%" style="padding:10px;">
+          {% endif %}
         </div>
-        <hr>
-        <div class="d-flex">
-          <div class="flex-shrink-1 mr-2" style="display: inline;">
-            {% if user_info['picture_url'] == None %}
-              <img src="/static/avatar.png" class="rounded-circle" alt="Profile picture" style="width: 200px; heigth: 200px;">
-            {% else %}
-              <img src="{{ user_info['picture_url'] }}" class="rounded-circle" alt="Profile picture" style="width: 200px; heigth: 200px;">
-            {% endif %}
-          </div>
-          <div class="p-2 w-100 flex-grow-1">
-            <div class="d-flex flex-row">
-               <div class="p-2" style="flex-basis: 100px;">Name:</div>
-               <div class="p-2" style=";"> {{ user_info['name'] }}</div>
-            </div>
-            <div class="d-flex flex-row">
-               <div class="p-2" style="flex-basis: 100px;">City:</div>
-               <div class="p-2 flex-fill" style=";">{{ user_info['city'] }}</div>
-            </div>
-            <div class="d-flex flex-row">
-               <div class="p-2" style="flex-basis: 100px;">Birthday:</div>
-               <div class="p-2 flex-fill" style=";">{{ user_info['birthday'] }}</div>
-            </div>
-            <div class="d-flex flex-row">
-               <div class="p-2" style="flex-basis: 100px;">Description:</div>
-               <div class="p-2 flex-fill" style=";">{{ user_info['description'] }}</div>
-            </div>
-            <a class="btn btn-outline-dark btn-sm mt-4" name="editProfileBtn" id="editProfileBtn" href="/profileeditor">Edit profile</a>
-          </div>
-        </div>
+        <h1 class="username">{{ user_info['username'] }}</h1>
         <hr>
         <div class="ml-1" style="padding:10px;">
+          <h6>Name : <br>City : <br>Birthday :</h6>
+          <br><br><br>
           {% if wants %}
           <h5>Learning: </h5>
           <ul class="list-group list-group-flush">
@@ -105,26 +83,6 @@
               {% endfor %}
             </div>
           {% endif %}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" style="display: none;">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="profileModalTitle">Modal title</h5>
-          <button type="button" name="profileModalCloseButton" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true"></span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Body text of the modal
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
