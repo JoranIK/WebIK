@@ -8,6 +8,7 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
+from flask_mail import Mail, Message
 
 from helpers import apology, login_required
 
@@ -52,6 +53,10 @@ def upload():
         skill_level = request.form.get("level-select")
         db.execute("INSERT INTO video (id, video_id, video_name, instrument, skill_level) VALUES (:user_id, :video_id, :video_name, :instrument, :skill_level)",
                     user_id=user_id, video_id=video_id, video_name=video_name, instrument=instrument, skill_level=skill_level)
+
+        # SELECT * FROM followers WHERE master_id = :master_id
+        # foreach follower, send notification mail with /send-mail
+        # requests.post("/send-mail", json={"recipient":"email ontvanger", "title":"titel email", "message":"email message"})
 
         return render_template ("upload1.html")
     return render_template("upload.html")
@@ -314,24 +319,17 @@ def login():
 
 @app.route("/instruments", methods=["GET", "POST"])
 def instruments():
+    instrument = request.args.get("instruments-select")
+    skill_level = request.args.get("level-select")
 
-    # user reached via POST
-    if request.method == "POST":
+    videos = db.execute("SELECT * FROM video WHERE instrument = :instrument AND skill_level = :skill_level",
+                        instrument=instrument, skill_level=skill_level)
 
-        instrument = request.form.get("instruments-select")
-        skill_level = request.form.get("level-select")
+    if not videos:
+        return render_template("instruments.html")
 
-        videos = db.execute("SELECT * FROM video WHERE instrument = :instrument AND skill_level = :skill_level",
-                            instrument=instrument, skill_level=skill_level)
+    return render_template("instruments.html", videos=videos)
 
-        if not videos:
-            return render_template("instruments1.html")
-
-
-        return render_template("instruments.html", videos=videos)
-
-    # user reached via GET
-    return render_template("instruments.html")
 
 
 @app.route("/registercheck", methods=["GET"])
@@ -399,3 +397,37 @@ def video():
 
 
     return render_template("video.html", video=currentVideo,comments=comments)
+
+@app.route("/delete-comment/<commentId>", methods=["POST"])
+def deleteComment(commentId):
+
+    if session['user_id']:
+        comment = db.execute("SELECT * FROM comments WHERE comment_id = :comment_id", comment_id=commentId)[0];
+        user_id = comment["user_id"];
+
+        if user_id == session['user_id']:
+            db.execute("DELETE FROM comments WHERE comment_id = :comment_id", comment_id=commentId);
+            return 'Ok', 200;
+
+    return 'Unauthorized', 401;
+
+
+# @app.route("/send-mail", methods=["POST"])
+# def sendMail():
+#     app.config['MAIL_SERVER']='smtp.gmail.com'
+#     app.config['MAIL_PORT'] = 465
+#     app.config['MAIL_USERNAME'] = 'getmusical22@gmail.com'
+#     app.config['MAIL_PASSWORD'] = 'Webikprog22'
+#     app.config['MAIL_USE_TLS'] = False
+#     app.config['MAIL_USE_SSL'] = True
+#     mail = Mail(app)
+
+#     content = request.json;
+#     recipient = content["recipient"];
+#     title = content["title"];
+#     message = content["message"];
+
+#     msg = Message('Hello', sender = 'getmusical22@gmail.com', recipients = ['id1@gmail.com'])
+#     msg.body = "This is the email body"
+#     mail.send(msg);
+
