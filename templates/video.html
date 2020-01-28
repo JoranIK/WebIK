@@ -25,21 +25,42 @@
     <form action="/like?video_id={{ video['video_id'] }}" method="get">
                     <input type="hidden" name="video_id" value="{{ video['video_id'] }}"></input>
 
-      <button type="submit" class="btn btn-primary">LIKE!</button>
+      <button type="submit" class="btn btn-primary">
+        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> LIKE!</button>
     </form>
 
     {% endif %}
 
-
+    <!-- Mogelijkheid om comments te plaatsen -->
     {% for comment in comments %}
-    <div class="card border-dark mb-3 mt-2">
-      <div class="card-body">
-        <h5 class="card-title">{{ comment["username"] }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{ comment["date"] }}</h6>
-        <p class="card-text">{{ comment["message"] }}</p>
+      <div class="card border-dark mb-3 mt-2" id="comment-{{ comment['comment_id'] }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ comment["username"] }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ comment["date"] }}</h6>
+          <p class="card-text">{{ comment["message"] }}</p>
+
+          <!-- Verwijder de comment als de comment van de ingelogde user is -->
+          {% if session.user_id and session.user_id == comment["user_id"]  %}
+            <button type="button" class="btn btn-primary" onclick="onDeleteComment({{ comment['comment_id'] }})">
+              Delete
+            </button>
+          {% endif %}
+        </div>
       </div>
-    </div>
+    {% endfor %}
 
-{% endfor %}
+<!-- Wanneer comment verwijderd wordt, ziet de gebruiker de comment niet meer -->
+<script type="text/javascript">
+function onDeleteComment(commentId) {
+  var confirmation = confirm("Are you sure you want to delete the comment?");
 
+  if (confirmation == true) {
+    // delete comment
+    $.post("/delete-comment/" + commentId, function(result){
+        var element = document.getElementById("comment-" + commentId);
+        element.parentNode.removeChild(element);
+      });
+  }
+}
+</script>
 {% endblock %}
