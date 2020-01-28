@@ -69,10 +69,14 @@ Instruments
 
         <!-- Wanneer er geen video bestaat, geef dan een foutmelding-->
         {% else %}
-            <h2 class="display-4">No videos in this category have been uploaded yet!</h2>
-            <p>Would you like to go back to the homepage? </p><a href='/' class="mb-2">Click here!</a>
+        <div class="card mt-5 text-center" style= "background-color: rgba(255,255,255,0.7)">
+          <h3 class="display-5"> No videos in this category have been uploaded yet! </h3>
+              <p> Would you like to upload a video? </p> <a href="/upload" class="mb-2">Click here!</a>
+        </div>
         {% endif %}
 
       {% endif %}
 
 {% endblock %}
+
+
