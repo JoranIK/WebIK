@@ -40,6 +40,12 @@
 
     </form>
 
+    <form action="/dislike?video_id={{ video['video_id'] }}" method="get">
+                    <input type="hidden" name="video_id" value="{{ video['video_id'] }}"></input>
+
+      <button type="submit" class="btn btn-primary">
+        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> DISLIKE!</button>
+    </form>
     {% endif %}
 
     <!-- Mogelijkheid om comments te plaatsen -->

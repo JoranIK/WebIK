@@ -8,7 +8,7 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask_mail import Mail, Message
+#from flask_mail import Mail, Message
 
 from helpers import apology, login_required
 
@@ -65,11 +65,11 @@ def upload():
 @login_required
 def like():
 
+    # set variables
     video_id = request.args.get("video_id")
     liker_id = session["user_id"]
     video_info = db.execute("SELECT * FROM video WHERE video_id=:video_id",
-                           video_id=video_id)
-    print(video_info)
+                            video_id=video_id)
     poster_id = video_info[0]["id"]
     instrument = video_info[0]["instrument"]
 
@@ -87,10 +87,44 @@ def like():
         db.execute("UPDATE users SET likes_electric_guitar = likes_electric_guitar + 1 WHERE id=:poster_id",
                    poster_id=poster_id)
 
+    # insert like into db
     db.execute("INSERT INTO likes (poster_id, video_id, liker_id) VALUES (:poster_id, :video_id, :liker_id)",
                poster_id=poster_id, video_id=video_id, liker_id=liker_id)
 
     return '', 204
+
+@app.route("/dislike", methods=["GET"])
+@login_required
+def dislike():
+
+    # set variables
+    video_id = request.args.get("video_id")
+    liker_id = session["user_id"]
+    video_info = db.execute("SELECT * FROM video WHERE video_id=:video_id",
+                           video_id=video_id)
+    poster_id = video_info[0]["id"]
+    instrument = video_info[0]["instrument"]
+
+    # change like in database for instrument
+    if instrument == "Piano":
+        db.execute("UPDATE users SET likes_piano = likes_piano - 1 WHERE id=:poster_id",
+                   poster_id=poster_id)
+    if instrument == "Drum":
+        db.execute("UPDATE users SET likes_drum = likes_drum - 1 WHERE id=:poster_id",
+                   poster_id=poster_id)
+    if instrument == "Guitar":
+        db.execute("UPDATE users SET likes_guitar = likes_guitar - 1 WHERE id=:poster_id",
+                   poster_id=poster_id)
+    if instrument == "Electric-guitar":
+        db.execute("UPDATE users SET likes_electric_guitar = likes_electric_guitar - 1 WHERE id=:poster_id",
+                   poster_id=poster_id)
+
+    # delete like from db
+    db.execute("DELETE FROM likes WHERE poster_id = :poster_id AND video_id = :video_id AND liker_id = :liker_id",
+               poster_id=poster_id, video_id=video_id, liker_id=liker_id)
+
+    return '', 204
+
 
 @app.route("/follow", methods=["GET"])
 @login_required
@@ -185,7 +219,52 @@ def profile():
 
     wants = [ item for item in user_info if user_info[item] == 'yes' and item.startswith('want')]
 
-    return render_template("profile.html", user_info=user_info, wants=wants, following_usernames=following_usernames, user_videos=user_videos)
+
+    # set skill level based on likes on instrument user wants to learn
+    skill_levels = dict()
+    for item in wants:
+        if item == "want_guitar":
+            if user_info["likes_guitar"] <= 10:
+                skill_levels["guitar"] = "beginner"
+            if user_info["likes_guitar"] > 10:
+                skill_levels["guitar"] = "competent"
+            if user_info["likes_guitar"] > 20:
+                skill_levels["guitar"] = "proficient"
+            if user_info["likes_guitar"] > 30:
+                skill_levels["guitar"] = "expert"
+
+        if item == "want_electric_guitar":
+            if user_info["likes_electric_guitar"] <= 10:
+                skill_levels["electric_guitar"] = "beginner"
+            if user_info["likes_electric_guitar"] > 10:
+                skill_levels["electric_guitar"] = "competent"
+            if user_info["likes_electric_guitar"] > 20:
+                skill_levels["electric_guitar"] = "proficient"
+            if user_info["likes_electric_guitar"] > 30:
+                skill_levels["electric_guitar"] = "expert"
+
+        if item == "want_piano":
+            if user_info["likes_piano"] <= 10:
+                skill_levels["piano"] = "beginner"
+            if user_info["likes_piano"] > 10:
+                skill_levels["piano"] = "competent"
+            if user_info["likes_piano"] > 20:
+                skill_levels["piano"] = "proficient"
+            if user_info["likes_piano"] > 30:
+                skill_levels["piano"] = "expert"
+
+        if item == "want_drums":
+            if user_info["likes_drum"] <= 10:
+                skill_levels["drum"] = "beginner"
+            if user_info["likes_drum"] > 10:
+                skill_levels["drum"] = "competent"
+            if user_info["likes_drum"] > 20:
+                skill_levels["drum"] = "proficient"
+            if user_info["likes_drum"] > 30:
+                skill_levels["drum"] = "expert"
+
+
+    return render_template("profile.html", user_info=user_info, wants=wants, following_usernames=following_usernames, user_videos=user_videos, skill_levels=skill_levels)
 
 
 @app.route("/profileeditor", methods=["GET", "POST"])

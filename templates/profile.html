@@ -28,22 +28,22 @@
               {% if item == 'want_guitar' %}
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Guitar
-                <span class="badge badge-primary badge-pill">level</span>
+                <span class="badge badge-primary badge-pill">level {{ skill_levels["guitar"] }}</span>
               </li>
               {% elif item == 'want_electric_guitar' %}
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Electric guitar
-                <span class="badge badge-primary badge-pill">level</span>
+                <span class="badge badge-primary badge-pill">level {{ skill_levels["electric_guitar"] }}</span>
               </li>
               {% elif item == 'want_piano' %}
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Piano
-                <span class="badge badge-primary badge-pill">level</span>
+                <span class="badge badge-primary badge-pill">level {{ skill_levels["piano"] }}</span>
               </li>
               {% elif item == 'want_drums' %}
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Drums
-                <span class="badge badge-primary badge-pill">level</span>
+                <span class="badge badge-primary badge-pill">level {{ skill_levels["drum"] }}</span>
               </li>
                 {% endif %}
               {% endfor %}
