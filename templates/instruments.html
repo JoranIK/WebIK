@@ -7,7 +7,7 @@ Instruments
 {% block main %}
         <div class="card" style="background-color: rgba(255,255,255,0.9)";>
           <div class="card-body">
-            <form action="/instruments" method="POST">
+            <form action="/instruments" method="GET">
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="instruments-select">Instruments</label>
@@ -35,16 +35,44 @@ Instruments
           </div>
         </div>
 
-        {% for row in videos %}
-          <div class="card mt-2" style="width: 18rem;">
-            <img class="card-img-top img-thumbnail" src="https://i.ytimg.com/vi/{{ row["video_id"] }}/hqdefault.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">{{row ["video_name"] }}</h5>
-              <a href="/video?video_id={{row ["video_id"] }}" class="btn btn-primary">Watch video</a>
-            </div>
-          </div>
-        </div>
+        <!--Er is gezocht naar videos)-->
+        {% if request.args.get('instruments-select') and request.args.get('level-select') %}
 
+          {% if videos %}
 
-        {% endfor %}
+            <!--Loop per 4 door de videos-->
+            {% for i in range(0, videos.__len__(), 4) %}
+
+              <!--Maak 1 row aan per 4 videos-->
+              <div class="row">
+
+                <!--Stop maximaal 4 videos in de row element-->
+                {% for y in range(4) %}
+
+                  <!--Als de video bestaat, weergeef deze dan-->
+                  {% if videos[i+y] %}
+
+                    <div class="card mt-2 col-md-3 px-0" style="width: 18rem;">
+                      <img class="card-img-top img-thumbnail" src="https://i.ytimg.com/vi/{{ videos[i+y]["video_id"] }}/hqdefault.jpg" alt="Card image cap">
+                      <div class="card-body">
+                        <h5 class="card-title">{{videos[i+y] ["video_name"] }}</h5>
+                        <a href="/video?video_id={{videos[i+y] ["video_id"] }}" class="btn btn-primary">Watch video</a>
+                      </div>
+                    </div>
+
+                  {% endif %}
+
+                {% endfor %}
+              </div>
+
+            {% endfor %}
+
+        <!-- Wanneer er geen video bestaat, geef dan een foutmelding-->
+        {% else %}
+            <h2 class="display-4">No videos in this category have been uploaded yet!</h2>
+            <p>Would you like to go back to the homepage? </p><a href='/' class="mb-2">Click here!</a>
+        {% endif %}
+
+      {% endif %}
+
 {% endblock %}
