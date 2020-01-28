@@ -20,13 +20,14 @@ body {
 .welcome_text {
     position: relative;
     text-align: center;
-    color: black;
+    color: #08415e;
     font-size: 50px;
 }
 
 .sign_up_text {
     position: relative;
     font-size: 35px;
+    padding-top: 10px;
 }
 
 .home_teacher {
@@ -34,7 +35,7 @@ body {
     position: relative;
     width: 450px;
     text-align: center;
-    color: #0a5479;
+    color: #1d7daa;
     font-size: 30px;
 }
 
@@ -43,7 +44,7 @@ body {
     position: relative;
     width: 450px;
     text-align: center;
-    color: #0a5479;
+    color: #1d7daa;
     font-size: 30px;
 }
 
@@ -69,3 +70,5 @@ right_position{
     color: #0a5479;
     padding-right:190px;
 }
+
+
