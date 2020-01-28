@@ -219,7 +219,52 @@ def profile():
 
     wants = [ item for item in user_info if user_info[item] == 'yes' and item.startswith('want')]
 
-    return render_template("profile.html", user_info=user_info, wants=wants, following_usernames=following_usernames, user_videos=user_videos)
+
+    # set skill level based on likes on instrument user wants to learn
+    skill_levels = dict()
+    for item in wants:
+        if item == "want_guitar":
+            if user_info["likes_guitar"] <= 10:
+                skill_levels["guitar"] = "beginner"
+            if user_info["likes_guitar"] > 10:
+                skill_levels["guitar"] = "competent"
+            if user_info["likes_guitar"] > 20:
+                skill_levels["guitar"] = "proficient"
+            if user_info["likes_guitar"] > 30:
+                skill_levels["guitar"] = "expert"
+
+        if item == "want_electric_guitar":
+            if user_info["likes_electric_guitar"] <= 10:
+                skill_levels["electric_guitar"] = "beginner"
+            if user_info["likes_electric_guitar"] > 10:
+                skill_levels["electric_guitar"] = "competent"
+            if user_info["likes_electric_guitar"] > 20:
+                skill_levels["electric_guitar"] = "proficient"
+            if user_info["likes_electric_guitar"] > 30:
+                skill_levels["electric_guitar"] = "expert"
+
+        if item == "want_piano":
+            if user_info["likes_piano"] <= 10:
+                skill_levels["piano"] = "beginner"
+            if user_info["likes_piano"] > 10:
+                skill_levels["piano"] = "competent"
+            if user_info["likes_piano"] > 20:
+                skill_levels["piano"] = "proficient"
+            if user_info["likes_piano"] > 30:
+                skill_levels["piano"] = "expert"
+
+        if item == "want_drums":
+            if user_info["likes_drum"] <= 10:
+                skill_levels["drum"] = "beginner"
+            if user_info["likes_drum"] > 10:
+                skill_levels["drum"] = "competent"
+            if user_info["likes_drum"] > 20:
+                skill_levels["drum"] = "proficient"
+            if user_info["likes_drum"] > 30:
+                skill_levels["drum"] = "expert"
+
+
+    return render_template("profile.html", user_info=user_info, wants=wants, following_usernames=following_usernames, user_videos=user_videos, skill_levels=skill_levels)
 
 
 @app.route("/profileeditor", methods=["GET", "POST"])
