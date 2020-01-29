@@ -194,7 +194,7 @@ def profile():
     user_videos = db.execute("SELECT * FROM video WHERE id = :id",
                              id=session["user_id"])
 
-    # if the user is logged int, make a list of who he's following
+    # if the user is logged in, make a list of who he's following
     if session['user_id']:
         master_list = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
                                  slave_id=session['user_id'])
@@ -323,7 +323,7 @@ def register():
         db.execute("INSERT INTO users (username, password, want_guitar, want_electric_guitar, want_piano, want_drums, email) VALUES(:username, :password, :want_guitar, :want_electric_guitar, :want_piano, :want_drums, :email)",
                    username=request.form.get("username"), password=generate_password_hash(request.form.get("password"), method='pbkdf2:sha256', salt_length=8), want_guitar=want_guitar, want_electric_guitar=want_electric_guitar, want_piano=want_piano, want_drums=want_drums, email=request.form.get("email"))
 
-        # return to homepage
+        # return to homepage, registration is successful
         return render_template("register1.html")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -359,7 +359,7 @@ def login():
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
 
-        # Redirect user to home page
+        # Redirect user to login home page
         return render_template("homepage.html")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -437,7 +437,7 @@ def usercheck():
 def video():
     videoId = request.args.get('video_id')
 
-    # if a user is logged in, check if he already like the video or not
+    # if a user is logged in, check if he already liked the video or not
     try:
         if session['user_id']:
             db_likes = db.execute("SELECT liker_id FROM likes WHERE video_id = :video_id",
@@ -478,6 +478,7 @@ def deleteComment(commentId):
         comment = db.execute("SELECT * FROM comments WHERE comment_id = :comment_id", comment_id=commentId)[0];
         user_id = comment["user_id"];
 
+        # only allow user that has logged in to delete his or her comments
         if user_id == session['user_id']:
             db.execute("DELETE FROM comments WHERE comment_id = :comment_id", comment_id=commentId);
             return 'Ok', 200;
