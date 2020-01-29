@@ -34,6 +34,7 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
 def skill_counter(wants, user_info):
     skill_levels = dict()
     for item in wants:
@@ -79,6 +80,7 @@ def skill_counter(wants, user_info):
 
     return skill_levels
 
+
 def like_instrument(instrument, poster_id, db):
 
     # change like in database for instrument
@@ -96,6 +98,7 @@ def like_instrument(instrument, poster_id, db):
                    poster_id=poster_id)
 
     pass
+
 
 def dislike_instrument(instrument, poster_id, db):
 
