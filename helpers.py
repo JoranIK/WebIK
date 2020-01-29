@@ -33,3 +33,48 @@ def login_required(f):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
+
+def skill_counter(wants, user_info):
+    skill_levels = dict()
+    for item in wants:
+        if item == "want_guitar":
+            if user_info["likes_guitar"] <= 10:
+                skill_levels["guitar"] = "beginner"
+            if user_info["likes_guitar"] > 10:
+                skill_levels["guitar"] = "competent"
+            if user_info["likes_guitar"] > 20:
+                skill_levels["guitar"] = "proficient"
+            if user_info["likes_guitar"] > 30:
+                skill_levels["guitar"] = "expert"
+
+        if item == "want_electric_guitar":
+            if user_info["likes_electric_guitar"] <= 10:
+                skill_levels["electric_guitar"] = "beginner"
+            if user_info["likes_electric_guitar"] > 10:
+                skill_levels["electric_guitar"] = "competent"
+            if user_info["likes_electric_guitar"] > 20:
+                skill_levels["electric_guitar"] = "proficient"
+            if user_info["likes_electric_guitar"] > 30:
+                skill_levels["electric_guitar"] = "expert"
+
+        if item == "want_piano":
+            if user_info["likes_piano"] <= 10:
+                skill_levels["piano"] = "beginner"
+            if user_info["likes_piano"] > 10:
+                skill_levels["piano"] = "competent"
+            if user_info["likes_piano"] > 20:
+                skill_levels["piano"] = "proficient"
+            if user_info["likes_piano"] > 30:
+                skill_levels["piano"] = "expert"
+
+        if item == "want_drums":
+            if user_info["likes_drum"] <= 10:
+                skill_levels["drum"] = "beginner"
+            if user_info["likes_drum"] > 10:
+                skill_levels["drum"] = "competent"
+            if user_info["likes_drum"] > 20:
+                skill_levels["drum"] = "proficient"
+            if user_info["likes_drum"] > 30:
+                skill_levels["drum"] = "expert"
+
+    return skill_levels
