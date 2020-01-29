@@ -17,7 +17,8 @@ like button verandert in een dislike button, om duplicatie te voorkomen. Voegt l
 - Joran en Dennis
 
 ### "/follow" en "/unfollow"
-Laat gebruikers andere gebruikers volgen
+Laat gebruikers andere gebruikers volgen. Met JavaScipt wordt gezorgd dat de functionaliteit en de looks van de knop verandert
+wanneer er op wordt geklikt.
 - Joran
 
 ### "/search"
@@ -26,7 +27,7 @@ gebruikers volgen of ontvolgen.
 - Joran en Dennis
 
 ### "/login" en "/logout"
-Zorgt dat gebruiker kan in- en uitloggen
+Zorgt dat gebruiker kan in- en uitloggen. De gebruiker krijgt een waarschuwing als er iets fout gaat, en word tegengehouden.
 - Joran
 
 ### "/profile"
@@ -35,12 +36,12 @@ welke berekend worden door middel van het aantal gehaalde likes per instrument.
 - Dennis en Joran
 
 ### "/profileeditor"
-Hier kan de je, met behulp van JavaScript informatie over jezelf in je profiel updaten. Ook dit wordt weergeven in /profile.
+Hier kan de je informatie over jezelf in je profiel updaten. Ook dit wordt weergeven in /profile.
 - Joran
 
 ### "/register"
 Laat gebruiker een account aanmaken voor de website, waarbij wordt aangegeven welke instrumenten hij/zij wilt leren. Deze worden
-dan weergeven op profile pagina.
+dan weergeven op profile pagina. Er wordt gecontroleerd of de gebruiker goede informatie invult, en of de gebruikersnaam nog niet in gebruik is.
 - Joran en Dennis
 
 ### "/instruments"
@@ -52,7 +53,7 @@ Kijkt of gebruikersnaam al bestaat
 - Joran
 
 ### "/usercheck"
-
+Usercheck zorgt ervoor dat een gebruiker niet met de verkeerde gegevens kan inloggen. Je krijgt gelijk een melding als er iets verkeerd gaat.
 - Joran
 
 ### "/video"
@@ -63,6 +64,3 @@ Daarnaast is te zien hoeveel likes de video heeft. Ook kunnen gebruikers hun eig
 ### "/delete-comment"
 Laat gebruikers hun eigen comments verwijderen. Wanneer gebruikers hun comments verwijderen, zien zij dat gelijk op de pagina zonder dat de pagina wordt gerefresht.
 - Sadjia
-
-
-
