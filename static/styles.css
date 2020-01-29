@@ -18,14 +18,14 @@
 }
 
 body {
-    background-image: url("instruments.jpg");
+    background-image: url("10.jpg");
     background-size: cover;
 }
 
 .welcome_text {
     position: relative;
     text-align: center;
-    color: #08415e;
+    color: #26C281;
     font-size: 50px;
 }
 
@@ -33,8 +33,16 @@ body {
     position: relative;
     font-size: 35px;
     padding-top: 10px;
+    color: #26C281;
 }
 
+.index-card-header {
+  color: #156A47;
+}
+
+.index-card-body {
+  color: #26C281;
+}
 .home_teacher {
     float: left;
     position: relative;
