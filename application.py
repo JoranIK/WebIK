@@ -8,7 +8,7 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
-#from flask_mail import Mail, Message
+
 
 from helpers import apology, login_required
 
@@ -44,19 +44,19 @@ def index():
 
 @app.route("/upload", methods=["GET","POST"] )
 def upload():
+    # if button is clicked
     if request.method == "POST":
+        # set variables for filled in fields
         user_id = session["user_id"]
         video_id = request.form.get("video_id")
         video_name = request.form.get("video_name")
         instrument = request.form.get("instruments-select")
-        print(instrument)
         skill_level = request.form.get("level-select")
+
+        # insert video in db
         db.execute("INSERT INTO video (id, video_id, video_name, instrument, skill_level) VALUES (:user_id, :video_id, :video_name, :instrument, :skill_level)",
                     user_id=user_id, video_id=video_id, video_name=video_name, instrument=instrument, skill_level=skill_level)
 
-        # SELECT * FROM followers WHERE master_id = :master_id
-        # foreach follower, send notification mail with /send-mail
-        # requests.post("/send-mail", json={"recipient":"email ontvanger", "title":"titel email", "message":"email message"})
 
         return render_template ("upload1.html")
     return render_template("upload.html")
@@ -130,7 +130,7 @@ def dislike():
 @login_required
 def follow():
 
-    # stel de id's vast. De ingelogde user is de slave.
+    # sets master and slave id, slave follows the master
     master_id = request.args.get("user_id")
     slave_id = session['user_id']
 
