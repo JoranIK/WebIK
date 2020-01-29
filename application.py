@@ -173,8 +173,15 @@ def unfollow():
 @app.route("/search", methods=["GET","POST"])
 def search():
 
-    # maak een lijst met users
-    userlist = db.execute("SELECT username, id FROM users")
+    if session['user_id']:
+        # maak een lijst met users zonder gebruiker
+        user_id = session['user_id']
+        userlist = db.execute("SELECT username, id FROM users WHERE NOT id=:user_id",
+                              user_id=user_id)
+    else:
+        # maak een lijst met users
+        userlist = db.execute("SELECT username, id FROM users")
+
     results = dict()
 
     if session['user_id']:
