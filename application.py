@@ -233,6 +233,25 @@ def profile():
     return render_template("profile.html", user_info=user_info, wants=wants, following_usernames=following_usernames, user_videos=user_videos, skill_levels=skill_levels)
 
 
+@app.route("/userprofile", methods=["GET"])
+def userprofile():
+
+    id = request.args.get("id")
+
+    user_info = db.execute("SELECT * FROM users WHERE id = :id",
+                            id=id)[0]
+
+    user_videos = db.execute("SELECT * FROM video WHERE id = :id",
+                             id=id)
+
+    wants = [ item for item in user_info if user_info[item] == 'yes' and item.startswith('want')]
+
+    # set skill level based on likes on instrument user wants to learn
+    skill_levels = skill_counter(wants, user_info)
+
+    return render_template("userprofile.html", user_info=user_info, wants=wants, user_videos=user_videos, skill_levels=skill_levels)
+
+
 @app.route("/profileeditor", methods=["GET", "POST"])
 def profileeditor():
 

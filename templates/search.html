@@ -13,7 +13,7 @@
         <form action="/unfollow?username={{ username }}" method="GET">
           <div class="form-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              {{ username }}
+              <a href="/userprofile?id={{ id }}">{{ username }}</a>
               <input type="hidden" name="user_id" value="{{ id }}"></input>
               {% if session.user_id %}
                   <button class="btn btn-danger follow-button" type="submit" name="id">Unfollow</button>
@@ -25,7 +25,7 @@
         <form action="/follow?username={{ username }}" method="GET">
           <div class="form-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              {{ username }}
+              <a href="/userprofile?id={{ id }}">{{ username }}</a>
               <input type="hidden" name="user_id" value="{{ id }}"></input>
               {% if session.user_id %}
                   <button class="btn btn-info follow-button" type="submit" name="id">Follow</button>
