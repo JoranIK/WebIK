@@ -5,7 +5,7 @@ Instruments
 {% endblock %}
 
 {% block main %}
-        <div class="card" style="background-color: rgba(255,255,255,0.9)";>
+        <div class="card" style="background-color: rgba(255,255,255,0.95)";>
           <div class="card-body">
             <form action="/instruments" method="GET">
               <div class="form-row">
@@ -69,8 +69,8 @@ Instruments
 
         <!-- Wanneer er geen video bestaat, geef dan een foutmelding-->
         {% else %}
-        <div class="card mt-5 text-center" style= "background-color: rgba(255,255,255,0.7)">
-          <h3 class="display-5"> No videos in this category have been uploaded yet! </h3>
+        <div class="card mt-5 text-center" style= "background-color: rgba(255,255,255,0.95)">
+          <h3 class="display-5 welcome_text"> No videos in this category have been uploaded yet! </h3>
               <p> Would you like to upload a video? </p> <a href="/upload" class="mb-2">Click here!</a>
         </div>
         {% endif %}
@@ -78,5 +78,3 @@ Instruments
       {% endif %}
 
 {% endblock %}
-
-
