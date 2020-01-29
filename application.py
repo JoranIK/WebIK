@@ -114,11 +114,12 @@ def follow():
     master_id = request.args.get("user_id")
     slave_id = session['user_id']
 
+    # make a list of user the user is already following
     db_followers = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
                               slave_id=slave_id)
-
     already_following = [item['master_id'] for item in db_followers]
 
+    # if the connection already exists, don't allow the follow
     exists = db.execute("SELECT master_id, slave_id FROM followers WHERE master_id = :master_id AND slave_id = :slave_id",
                         master_id=master_id, slave_id=slave_id)
     if not exists:
@@ -132,15 +133,15 @@ def follow():
 @login_required
 def unfollow():
 
-    # stel de id's vast. De ingelogde user is de slave.
     master_id = request.args.get("user_id")
     slave_id = session['user_id']
 
+    # make a list of users the user is already following
     db_followers = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
                               slave_id=slave_id)
-
     already_following = [item['master_id'] for item in db_followers]
 
+    # if the connection already exists, only then unfollow
     exists = db.execute("SELECT master_id, slave_id FROM followers WHERE master_id = :master_id AND slave_id = :slave_id",
                         master_id=master_id, slave_id=slave_id)
     if exists:
@@ -154,21 +155,21 @@ def unfollow():
 def search():
 
     if session['user_id']:
-        # maak een lijst met users zonder gebruiker
+        # make a list of users without the currently logged in user
         user_id = session['user_id']
         userlist = db.execute("SELECT username, id FROM users WHERE NOT id=:user_id",
                               user_id=user_id)
     else:
-        # maak een lijst met users
+        # make a list of all users
         userlist = db.execute("SELECT username, id FROM users")
-
-    results = dict()
 
     if session['user_id']:
         db_followers = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
                                   slave_id=session['user_id'])
         already_following = [item['master_id'] for item in db_followers]
 
+    # make a dict that matches username and id together
+    results = dict()
     if request.method == "POST":
         for item in userlist:
             if request.form.get("searchfield") in item['username']:
@@ -192,7 +193,8 @@ def profile():
 
     user_videos = db.execute("SELECT * FROM video WHERE id = :id",
                              id=session["user_id"])
-    # als de gebruiker is ingelogd, maak een lijst met wie hij volgt
+
+    # if the user is logged int, make a list of who he's following
     if session['user_id']:
         master_list = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
                                  slave_id=session['user_id'])
@@ -205,6 +207,7 @@ def profile():
                 if following_id == pair['id']:
                     following_usernames[pair['username']] = following_id
 
+    # make a list with the instruments the user wants to play
     wants = [item for item in user_info if user_info[item] == 'yes' and item.startswith('want')]
 
     # set skill level based on likes on instrument user wants to learn
@@ -237,6 +240,8 @@ def profileeditor():
 
     user_info = db.execute("SELECT * FROM users WHERE id = :id",
                            id=session['user_id'])[0]
+
+    # if the field is empty, keep the already existing information
     if request.method == "POST":
         name = request.form.get("name")
         if name == "":
@@ -383,6 +388,7 @@ def registercheck():
     usernames = db.execute("SELECT username FROM users")
     taken_names = [item['username'] for item in usernames]
 
+    # check if the entered username is available
     username = request.args.get('username')
     if username in taken_names:
         available = 'false'
