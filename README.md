@@ -6,12 +6,12 @@
 Geeft de homepage terug.
 - Dennis
 
-"/upload"
+### "/upload"
 Laat gebruikers een video "uploaden". Ze plaatsen eerst een video op youtube en geven daarna de "video id" aan ons door,
 samen met de naam, welk instrument er wordt bespeeld en de moeilijkheidsgraad
 - Dennis
 
-"/like" en "/dislike"
+### "/like" en "/dislike"
 Laat gebruikers een video liken of disliken. Er is met JavaScript voor gezorgd dat wanneer een video wordt geliket, de
 like button verandert in een dislike button, om duplicatie te voorkomen. Voegt like toe aan user database voor berekening skill level.
 - Joran en Dennis
