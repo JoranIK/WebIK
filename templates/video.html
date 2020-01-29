@@ -7,7 +7,6 @@
 {% block main %}
     <head>
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     </head>
@@ -24,7 +23,7 @@
             <input type="hidden" name="video_id" value="{{ video['video_id'] }}"></input>
             <button type="submit" class="btn btn-info btn-m like-button mr-3" id="like-btn" style="width: 120px;"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like</button>
           </form>
-          <div class="float-right btn btn-dark">Likes:&nbsp&nbsp<span class="like-text badge badge-light" id="timesLiked">{{ likes }}</span></div>
+          <div class="float-right btn btn-dark" style="width: 120px;">Likes:&nbsp&nbsp<span class="badge badge-light" id="timesLiked">{{ likes }}</span></div>
         </div>
         {% else %}
         <div class="d-flex">
@@ -32,13 +31,13 @@
             <input type="hidden" name="video_id" value="{{ video['video_id'] }}"></input>
             <button type="submit" class="btn btn-danger btn-m like-button mr-3" id="like-btn" style="width: 120px;"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Dislike</button>
           </form>
-          <div class="float-right btn btn-dark">Likes:&nbsp&nbsp<span class="like-text badge badge-light" id="timesLiked">{{ likes }}</span></div>
+          <div class="float-right btn btn-dark" style="width: 120px;">Likes:&nbsp&nbsp<span class="badge badge-light" id="timesLiked">{{ likes }}</span></div>
         </div>
         {% endif %}
       {% else %}
         <div class="d-flex">
             <button type="submit" class="btn btn-info btn-m like-button mr-3" id="like-btn" style="width: 120px;" disabled><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like</button>
-          <div class="float-right btn btn-dark">Likes:&nbsp&nbsp<span class="like-text badge badge-light" id="timesLiked">{{ likes }}</span></div>
+          <div class="float-right btn btn-dark">Likes:&nbsp&nbsp<span class="badge badge-light" id="timesLiked">{{ likes }}</span></div>
         </div>
       {% endif %}
     </div>
