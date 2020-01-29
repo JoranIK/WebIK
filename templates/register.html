@@ -82,57 +82,53 @@ Register
   </div>
 
   <script type="text/javascript">
-          (function() {
-            'use strict';
-            window.addEventListener('load', function() {
+  // check if the users entered valid information
+  (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      var registerSubmit = document.getElementById("registerSubmit")
+      registerSubmit.onclick = function(event){
+          var username_input = $('input[id="registerUsernameInput"]').val();
+          var email_input = $('input[id="registerEmailInput"]').val();
+          var password_input = $('input[id="registerPasswordInput"]').val();
+          var confirmation_input = $('input[id="registerConfirmationInput"]').val();
+          // receive True if the username is taken, false if it is available
+          $.get({
+              async: false,
+              dataType: "json",
+              url:"/registercheck?username=" + username_input,
+              success: function( data ) {
+                  if (!data){
+                    $('p[id="register_warning"]').css('display', 'block');
+                    document.getElementById("register_warning").innerHTML = "Username is already taken";
+                    event.preventDefault();
+                    event.stopPropagation();
+                  }
+                  // if there's an empty field, warn the user
+                  else if (email_input === "") {
+                    $('p[id="register_warning"]').css('display', 'block');
+                    document.getElementById("register_warning").innerHTML = "Please fill in your email";
+                    event.preventDefault();
+                    event.stopPropagation();
+                  }
+                  else if (password_input === "") {
+                    $('p[id="register_warning"]').css('display', 'block');
+                    document.getElementById("register_warning").innerHTML = "Please choose a password";
+                    event.preventDefault();
+                    event.stopPropagation();
+                  }
+                  // check if the passwords match
+                  if (password_input != confirmation_input) {
+                    $('p[id="register_warning"]').css('display', 'block');
+                    document.getElementById("register_warning").innerHTML = "Passwords don't match";
+                    event.preventDefault();
+                    event.stopPropagation();
+                  }
+              }
+          });
+      };
 
-              // var registerUsernameInput = document.getElementById("registerUsernameInput")
-              // var passwordInput = document.getElementById("regiserPasswordInput")
-              // var confirmationInput = document.getElementById("registerConfirmationInput")
-              // registerUsernameInput.value == "";
-              // passwordInput.value == "";
-              // confirmationInput.value == "";
-
-              var registerSubmit = document.getElementById("registerSubmit")
-              registerSubmit.onclick = function(event){
-                  var username_input = $('input[id="registerUsernameInput"]').val();
-                  var email_input = $('input[id="registerEmailInput"]').val();
-                  var password_input = $('input[id="registerPasswordInput"]').val();
-                  var confirmation_input = $('input[id="registerConfirmationInput"]').val();
-                  $.get({
-                      async: false,
-                      dataType: "json",
-                      url:"/registercheck?username=" + username_input,
-                      success: function( data ) {
-                          if (!data){
-                              $('p[id="register_warning"]').css('display', 'block');
-                              document.getElementById("register_warning").innerHTML = "Username is already taken";
-                              event.preventDefault();
-                              event.stopPropagation();
-                          }
-                          else if (email_input === "") {
-                            $('p[id="register_warning"]').css('display', 'block');
-                            document.getElementById("register_warning").innerHTML = "Please fill in your email";
-                            event.preventDefault();
-                            event.stopPropagation();
-                          }
-                          else if (password_input === "") {
-                            $('p[id="register_warning"]').css('display', 'block');
-                            document.getElementById("register_warning").innerHTML = "Please choose a password";
-                            event.preventDefault();
-                            event.stopPropagation();
-                          }
-                          if (password_input != confirmation_input) {
-                            $('p[id="register_warning"]').css('display', 'block');
-                            document.getElementById("register_warning").innerHTML = "Passwords don't match";
-                            event.preventDefault();
-                            event.stopPropagation();
-                          }
-                      }
-                  });
-              };
-
-              }, false);
-          })();
+      }, false);
+  })();
   </script>
 {% endblock %}

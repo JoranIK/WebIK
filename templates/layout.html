@@ -95,28 +95,32 @@
 </html>
 
 <script type="text/javascript">
+        // dropdown function
         (function() {
           'use strict';
           window.addEventListener('load', function() {
             var loginButton = document.getElementById('loginBtn');
             var loginFormDropdown = document.getElementById('loginFormDropdown')
+            // when the login button is clicked, toggle the dropdown
             loginButton.onclick = function() {
-              // document.getElementById('loginFormDropdown').style.display='block';
               if (loginFormDropdown.style.display === 'none') {
                 loginFormDropdown.style.display = 'block'
               } else {
                 loginFormDropdown.style.display='none';
               }
             }
+            // check login validity
             var loginFormDropdown = document.getElementById('loginFormDropdown')
             loginSubmit.onclick = function(event){
                 var username_input = $('input[name="username"]').val();
                 var password_input = $('input[name="password"]').val();
+                // get an error code from application.py
                 $.get({
                     async: false,
                     dataType: "json",
                     url:"/usercheck?username=" + username_input + "&password=" + password_input,
                     success: function( data ) {
+                        // execute a different action for each error code
                         if (data === 29){
                             $('div[id="error_message"]').css('display', 'block');
                             document.getElementById("error_text").innerHTML = "Username does not exist";

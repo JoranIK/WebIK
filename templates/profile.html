@@ -135,11 +135,14 @@
 </body>
 
 <script type="text/javascript">
+// change the functionality and looks of the follow button
 (function() {
       'use strict';
+      // wait for the window to load
       window.addEventListener('load', function() {
         document.querySelectorAll('.follow-button').forEach(button => {
           button.addEventListener('click', event => {
+            // if the button says 'follow', change it to an unfollow button
             if(button.innerHTML === 'Follow') {
               button.classList.remove('btn-info')
               button.classList.add('btn-danger')

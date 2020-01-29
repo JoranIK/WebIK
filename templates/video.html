@@ -80,6 +80,7 @@ function onDeleteComment(commentId) {
       });
   }
 }
+// change the functionality and looks of the like button when pressed
 (function() {
       'use strict';
       window.addEventListener('load', function() {
@@ -87,6 +88,7 @@ function onDeleteComment(commentId) {
         var likes = document.getElementById("timesLiked")
         var current_likes = parseInt(likes.innerHTML)
         like_button.addEventListener('click', event => {
+          // if the button contains 'thumbs-up', change the html features
           if(like_button.innerHTML.includes('thumbs-up')) {
             var current_likes = parseInt(likes.innerHTML)
             likes.innerHTML = parseInt(current_likes) + 1
@@ -95,7 +97,6 @@ function onDeleteComment(commentId) {
             like_button.innerHTML = '<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Dislike'
             like_button.parentNode.action = '/like?video_id=' + like_button.parentNode.action.split('=')[1]
           } else {
-            console.log('dislike it, then turn to like')
             var current_likes = parseInt(likes.innerHTML)
             likes.innerHTML = parseInt(current_likes) - 1
             like_button.classList.remove('btn-danger')
