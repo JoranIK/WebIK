@@ -472,23 +472,3 @@ def deleteComment(commentId):
             return 'Ok', 200;
 
     return 'Unauthorized', 401;
-
-
-# @app.route("/send-mail", methods=["POST"])
-# def sendMail():
-#     app.config['MAIL_SERVER']='smtp.gmail.com'
-#     app.config['MAIL_PORT'] = 465
-#     app.config['MAIL_USERNAME'] = 'getmusical22@gmail.com'
-#     app.config['MAIL_PASSWORD'] = 'Webikprog22'
-#     app.config['MAIL_USE_TLS'] = False
-#     app.config['MAIL_USE_SSL'] = True
-#     mail = Mail(app)
-
-#     content = request.json;
-#     recipient = content["recipient"];
-#     title = content["title"];
-#     message = content["message"];
-
-#     msg = Message('Hello', sender = 'getmusical22@gmail.com', recipients = ['id1@gmail.com'])
-#     msg.body = "This is the email body"
-#     mail.send(msg);
