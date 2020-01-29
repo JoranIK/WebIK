@@ -389,7 +389,7 @@ def login():
         session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
-        return redirect("/")
+        return render_template("homepage.html")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -465,6 +465,23 @@ def usercheck():
 def video():
     videoId = request.args.get('video_id')
 
+    # if a user is logged in, check if he already like the video or not
+    if session['user_id']:
+        db_likes = db.execute("SELECT liker_id FROM likes WHERE video_id = :video_id",
+                                        video_id=videoId)
+        already_liked = [ item['liker_id'] for item in db_likes ]
+        if session['user_id'] in already_liked:
+            liked = True
+        else:
+            liked = False
+
+    # see how many times the video was liked
+    liked_by = db.execute("SELECT * FROM likes WHERE video_id = :video_id",
+                        video_id=videoId)
+    likes = 0
+    for item in liked_by:
+        likes += 1
+
     # only allow POST when user is logged in
 
     if request.method == "POST":
@@ -475,7 +492,7 @@ def video():
     comments = db.execute("SELECT * FROM comments JOIN users on comments.user_id = users.id WHERE comments.video_id = :video_id", video_id=videoId);
 
 
-    return render_template("video.html", video=currentVideo,comments=comments)
+    return render_template("video.html", video=currentVideo,comments=comments, liked=liked, likes=likes)
 
 @app.route("/delete-comment/<commentId>", methods=["POST"])
 def deleteComment(commentId):
