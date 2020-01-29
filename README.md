@@ -64,3 +64,20 @@ Daarnaast is te zien hoeveel likes de video heeft. Ook kunnen gebruikers hun eig
 ### "/delete-comment"
 Laat gebruikers hun eigen comments verwijderen. Wanneer gebruikers hun comments verwijderen, zien zij dat gelijk op de pagina zonder dat de pagina wordt gerefresht.
 - Sadjia
+
+## Helpers
+We hebben een aantal functies in helpers gezet.
+
+### apology
+geeft een foutmelding als er iets mis gaat
+
+### login_required
+zorgt ervoor dat de gebruiker ingelogd is
+
+### skill_counter
+kijkt voor elk instrument dat de gebruiker wilt leren, hoe hoog het skill level van de gebruiker is
+Bij 0 tot 11 likes, is de gebruiker beginner. 10 likes daarbovenop verandert gebruiker naar competent.
+10 likes daarna wordt hij/zij proficient en bij 30 likes of meer is de gebruiker een expert.
+
+### like en dislike_instrument
+Zet een like bij, of haalt hem weg in users, als een gebruiker op de liketoets klikt.
