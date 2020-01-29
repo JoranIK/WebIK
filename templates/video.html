@@ -17,22 +17,29 @@
       <iframe src="https://www.youtube.com/embed/{{ video['video_id'] }}"></iframe>
     </div>
     <div class="text-right mt-2">
-      {% if liked == False %}
-      <div class="d-flex">
-        <form action="/like?video_id={{ video['video_id'] }}" method="get">
-          <input type="hidden" name="video_id" value="{{ video['video_id'] }}"></input>
-          <button type="submit" class="btn btn-info btn-m like-button mr-3" id="like-btn" style="width: 120px;"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like</button>
-        </form>
-        <div class="float-right btn btn-dark">Likes:&nbsp&nbsp<span class="like-text badge badge-light" id="timesLiked">{{ likes }}</span></div>
-      </div>
+      {% if session.user_id %}
+        {% if liked == False %}
+        <div class="d-flex">
+          <form action="/like?video_id={{ video['video_id'] }}" method="get">
+            <input type="hidden" name="video_id" value="{{ video['video_id'] }}"></input>
+            <button type="submit" class="btn btn-info btn-m like-button mr-3" id="like-btn" style="width: 120px;"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like</button>
+          </form>
+          <div class="float-right btn btn-dark">Likes:&nbsp&nbsp<span class="like-text badge badge-light" id="timesLiked">{{ likes }}</span></div>
+        </div>
+        {% else %}
+        <div class="d-flex">
+          <form action="/dislike?video_id={{ video['video_id'] }}" method="get">
+            <input type="hidden" name="video_id" value="{{ video['video_id'] }}"></input>
+            <button type="submit" class="btn btn-danger btn-m like-button mr-3" id="like-btn" style="width: 120px;"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Dislike</button>
+          </form>
+          <div class="float-right btn btn-dark">Likes:&nbsp&nbsp<span class="like-text badge badge-light" id="timesLiked">{{ likes }}</span></div>
+        </div>
+        {% endif %}
       {% else %}
-      <div class="d-flex">
-        <form action="/dislike?video_id={{ video['video_id'] }}" method="get">
-          <input type="hidden" name="video_id" value="{{ video['video_id'] }}"></input>
-          <button type="submit" class="btn btn-danger btn-m like-button mr-3" id="like-btn" style="width: 120px;"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Dislike</button>
-        </form>
-        <div class="float-right btn btn-dark">Likes:&nbsp&nbsp<span class="like-text badge badge-light" id="timesLiked">{{ likes }}</span></div>
-      </div>
+        <div class="d-flex">
+            <button type="submit" class="btn btn-info btn-m like-button mr-3" id="like-btn" style="width: 120px;" disabled><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like</button>
+          <div class="float-right btn btn-dark">Likes:&nbsp&nbsp<span class="like-text badge badge-light" id="timesLiked">{{ likes }}</span></div>
+        </div>
       {% endif %}
     </div>
 
