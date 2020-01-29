@@ -429,14 +429,18 @@ def video():
     videoId = request.args.get('video_id')
 
     # if a user is logged in, check if he already like the video or not
-    if session['user_id']:
-        db_likes = db.execute("SELECT liker_id FROM likes WHERE video_id = :video_id",
-                                        video_id=videoId)
-        already_liked = [ item['liker_id'] for item in db_likes ]
-        if session['user_id'] in already_liked:
-            liked = True
-        else:
-            liked = False
+    try:
+        if session['user_id']:
+            db_likes = db.execute("SELECT liker_id FROM likes WHERE video_id = :video_id",
+                                            video_id=videoId)
+            already_liked = [ item['liker_id'] for item in db_likes ]
+            if session['user_id'] in already_liked:
+                liked = True
+            else:
+                liked = False
+    except KeyError:
+        liked = False
+
 
     # see how many times the video was liked
     liked_by = db.execute("SELECT * FROM likes WHERE video_id = :video_id",
@@ -444,6 +448,7 @@ def video():
     likes = 0
     for item in liked_by:
         likes += 1
+
 
     # only allow POST when user is logged in
 
