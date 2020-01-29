@@ -27,6 +27,7 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
+
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
@@ -42,7 +43,7 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/upload", methods=["GET","POST"] )
+@app.route("/upload", methods=["GET", "POST"])
 def upload():
     # if button is clicked
     if request.method == "POST":
@@ -55,11 +56,11 @@ def upload():
 
         # insert video in db
         db.execute("INSERT INTO video (id, video_id, video_name, instrument, skill_level) VALUES (:user_id, :video_id, :video_name, :instrument, :skill_level)",
-                    user_id=user_id, video_id=video_id, video_name=video_name, instrument=instrument, skill_level=skill_level)
+                   user_id=user_id, video_id=video_id, video_name=video_name, instrument=instrument, skill_level=skill_level)
 
-
-        return render_template ("upload1.html")
+        return render_template("upload1.html")
     return render_template("upload.html")
+
 
 @app.route("/like", methods=["GET"])
 @login_required
@@ -82,6 +83,7 @@ def like():
 
     return '', 204
 
+
 @app.route("/dislike", methods=["GET"])
 @login_required
 def dislike():
@@ -90,7 +92,7 @@ def dislike():
     video_id = request.args.get("video_id")
     liker_id = session["user_id"]
     video_info = db.execute("SELECT * FROM video WHERE video_id=:video_id",
-                           video_id=video_id)
+                            video_id=video_id)
     poster_id = video_info[0]["id"]
     instrument = video_info[0]["instrument"]
 
@@ -113,15 +115,15 @@ def follow():
     slave_id = session['user_id']
 
     db_followers = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
-                                    slave_id=slave_id)
+                              slave_id=slave_id)
 
-    already_following = [ item['master_id'] for item in db_followers ]
+    already_following = [item['master_id'] for item in db_followers]
 
     exists = db.execute("SELECT master_id, slave_id FROM followers WHERE master_id = :master_id AND slave_id = :slave_id",
                         master_id=master_id, slave_id=slave_id)
     if not exists:
         db.execute("INSERT INTO followers (master_id, slave_id) VALUES(:master_id, :slave_id)",
-                    master_id=master_id, slave_id=slave_id)
+                   master_id=master_id, slave_id=slave_id)
 
     return '', 204
 
@@ -135,20 +137,20 @@ def unfollow():
     slave_id = session['user_id']
 
     db_followers = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
-                                    slave_id=slave_id)
+                              slave_id=slave_id)
 
-    already_following = [ item['master_id'] for item in db_followers ]
+    already_following = [item['master_id'] for item in db_followers]
 
     exists = db.execute("SELECT master_id, slave_id FROM followers WHERE master_id = :master_id AND slave_id = :slave_id",
                         master_id=master_id, slave_id=slave_id)
     if exists:
         db.execute("DELETE FROM followers WHERE master_id = :master_id AND slave_id = :slave_id",
-                    master_id=master_id, slave_id=slave_id)
+                   master_id=master_id, slave_id=slave_id)
 
     return '', 204
 
 
-@app.route("/search", methods=["GET","POST"])
+@app.route("/search", methods=["GET", "POST"])
 def search():
 
     if session['user_id']:
@@ -164,8 +166,8 @@ def search():
 
     if session['user_id']:
         db_followers = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
-                                        slave_id=session['user_id'])
-        already_following = [ item['master_id'] for item in db_followers ]
+                                  slave_id=session['user_id'])
+        already_following = [item['master_id'] for item in db_followers]
 
     if request.method == "POST":
         for item in userlist:
@@ -181,19 +183,20 @@ def logout():
 
     return render_template("logout.html")
 
+
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
 
     user_info = db.execute("SELECT * FROM users WHERE id = :id",
-                            id=session['user_id'])[0]
+                           id=session['user_id'])[0]
 
     user_videos = db.execute("SELECT * FROM video WHERE id = :id",
                              id=session["user_id"])
     # als de gebruiker is ingelogd, maak een lijst met wie hij volgt
     if session['user_id']:
         master_list = db.execute("SELECT master_id FROM followers WHERE slave_id = :slave_id",
-                                    slave_id=session['user_id'])
-        following = [ item['master_id'] for item in master_list ]
+                                 slave_id=session['user_id'])
+        following = [item['master_id'] for item in master_list]
         usernames_ids = db.execute("SELECT username, id FROM users")
         following_usernames = dict()
 
@@ -202,8 +205,7 @@ def profile():
                 if following_id == pair['id']:
                     following_usernames[pair['username']] = following_id
 
-    wants = [ item for item in user_info if user_info[item] == 'yes' and item.startswith('want')]
-
+    wants = [item for item in user_info if user_info[item] == 'yes' and item.startswith('want')]
 
     # set skill level based on likes on instrument user wants to learn
     skill_levels = skill_counter(wants, user_info)
@@ -217,12 +219,12 @@ def userprofile():
     id = request.args.get("id")
 
     user_info = db.execute("SELECT * FROM users WHERE id = :id",
-                            id=id)[0]
+                           id=id)[0]
 
     user_videos = db.execute("SELECT * FROM video WHERE id = :id",
                              id=id)
 
-    wants = [ item for item in user_info if user_info[item] == 'yes' and item.startswith('want')]
+    wants = [item for item in user_info if user_info[item] == 'yes' and item.startswith('want')]
 
     # set skill level based on likes on instrument user wants to learn
     skill_levels = skill_counter(wants, user_info)
@@ -234,7 +236,7 @@ def userprofile():
 def profileeditor():
 
     user_info = db.execute("SELECT * FROM users WHERE id = :id",
-                            id=session['user_id'])[0]
+                           id=session['user_id'])[0]
     if request.method == "POST":
         name = request.form.get("name")
         if name == "":
@@ -253,11 +255,12 @@ def profileeditor():
             description = user_info['description']
 
         db.execute("UPDATE users set name = :name, city = :city, birthday = :birthday, picture_url = :picture_url, description = :description WHERE id = :id",
-                    name=name, city=city, birthday=birthday, picture_url=picture_url, description=description, id=session['user_id'])
+                   name=name, city=city, birthday=birthday, picture_url=picture_url, description=description, id=session['user_id'])
 
         return redirect("/profile")
 
     return render_template("/profileeditor.html", user_info=user_info)
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -373,13 +376,12 @@ def instruments():
     return render_template("instruments.html", videos=videos)
 
 
-
 @app.route("/registercheck", methods=["GET"])
 def registercheck():
 
     # make a list of existing usernames
     usernames = db.execute("SELECT username FROM users")
-    taken_names = [ item['username'] for item in usernames ]
+    taken_names = [item['username'] for item in usernames]
 
     username = request.args.get('username')
     if username in taken_names:
@@ -389,12 +391,13 @@ def registercheck():
 
     return available
 
+
 @app.route("/usercheck", methods=["GET"])
 def usercheck():
 
     # make a list of existing usernames
     usernames = db.execute("SELECT username FROM users")
-    taken_names = [ item['username'] for item in usernames ]
+    taken_names = [item['username'] for item in usernames]
 
     # request the users input
     username = request.args.get('username')
@@ -402,7 +405,7 @@ def usercheck():
 
     # check if the password of given username is correct with the given password
     db_password = db.execute("SELECT password FROM users WHERE username = :username",
-                            username=username)
+                             username=username)
     if len(db_password) == 1:
         pw_check = check_password_hash(db_password[0]["password"], password)
 
@@ -432,8 +435,8 @@ def video():
     try:
         if session['user_id']:
             db_likes = db.execute("SELECT liker_id FROM likes WHERE video_id = :video_id",
-                                            video_id=videoId)
-            already_liked = [ item['liker_id'] for item in db_likes ]
+                                  video_id=videoId)
+            already_liked = [item['liker_id'] for item in db_likes]
             if session['user_id'] in already_liked:
                 liked = True
             else:
@@ -441,26 +444,26 @@ def video():
     except KeyError:
         liked = False
 
-
     # see how many times the video was liked
     liked_by = db.execute("SELECT * FROM likes WHERE video_id = :video_id",
-                        video_id=videoId)
+                          video_id=videoId)
     likes = 0
     for item in liked_by:
         likes += 1
-
 
     # only allow POST when user is logged in
 
     if request.method == "POST":
         if session['user_id']:
-            db.execute("INSERT INTO comments (user_id, video_id, date, message) VALUES(:user_id, :video_id, :date, :message)", user_id=session["user_id"], video_id=videoId, date=datetime.datetime.now(), message=request.form.get("comment"));
+            db.execute("INSERT INTO comments (user_id, video_id, date, message) VALUES(:user_id, :video_id, :date, :message)",
+                       user_id=session["user_id"], video_id=videoId, date=datetime.datetime.now(), message=request.form.get("comment"));
 
     currentVideo = db.execute("SELECT video_name, video_id FROM video WHERE video_id = :video_id", video_id=videoId)[0];
-    comments = db.execute("SELECT * FROM comments JOIN users on comments.user_id = users.id WHERE comments.video_id = :video_id", video_id=videoId);
+    comments = db.execute("SELECT * FROM comments JOIN users on comments.user_id = users.id WHERE comments.video_id = :video_id",
+                          video_id=videoId);
 
+    return render_template("video.html", video=currentVideo, comments=comments, liked=liked, likes=likes)
 
-    return render_template("video.html", video=currentVideo,comments=comments, liked=liked, likes=likes)
 
 @app.route("/delete-comment/<commentId>", methods=["POST"])
 def deleteComment(commentId):
