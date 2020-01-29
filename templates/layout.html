@@ -98,11 +98,9 @@
         (function() {
           'use strict';
           window.addEventListener('load', function() {
-            console.log('window load')
             var loginButton = document.getElementById('loginBtn');
             var loginFormDropdown = document.getElementById('loginFormDropdown')
             loginButton.onclick = function() {
-              console.log('drowdown click')
               // document.getElementById('loginFormDropdown').style.display='block';
               if (loginFormDropdown.style.display === 'none') {
                 loginFormDropdown.style.display = 'block'
@@ -110,12 +108,10 @@
                 loginFormDropdown.style.display='none';
               }
             }
-            console.log('after dropdown')
             var loginFormDropdown = document.getElementById('loginFormDropdown')
             loginSubmit.onclick = function(event){
                 var username_input = $('input[name="username"]').val();
                 var password_input = $('input[name="password"]').val();
-                console.log('variables')
                 $.get({
                     async: false,
                     dataType: "json",

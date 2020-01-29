@@ -526,4 +526,3 @@ def deleteComment(commentId):
 #     msg = Message('Hello', sender = 'getmusical22@gmail.com', recipients = ['id1@gmail.com'])
 #     msg.body = "This is the email body"
 #     mail.send(msg);
-
