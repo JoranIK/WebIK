@@ -10,7 +10,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
-from helpers import apology, login_required, skill_counter
+from helpers import apology, login_required, skill_counter, like_instrument, dislike_instrument
 
 # Configure application
 app = Flask(__name__)
@@ -73,19 +73,8 @@ def like():
     poster_id = video_info[0]["id"]
     instrument = video_info[0]["instrument"]
 
-    # change like in database for instrument
-    if instrument == "Piano":
-        db.execute("UPDATE users SET likes_piano = likes_piano + 1 WHERE id=:poster_id",
-                   poster_id=poster_id)
-    if instrument == "Drum":
-        db.execute("UPDATE users SET likes_drum = likes_drum + 1 WHERE id=:poster_id",
-                   poster_id=poster_id)
-    if instrument == "Guitar":
-        db.execute("UPDATE users SET likes_guitar = likes_guitar + 1 WHERE id=:poster_id",
-                   poster_id=poster_id)
-    if instrument == "Electric-guitar":
-        db.execute("UPDATE users SET likes_electric_guitar = likes_electric_guitar + 1 WHERE id=:poster_id",
-                   poster_id=poster_id)
+    # likes poster's instrument counter
+    like_instrument(instrument, poster_id, db)
 
     # insert like into db
     db.execute("INSERT INTO likes (poster_id, video_id, liker_id) VALUES (:poster_id, :video_id, :liker_id)",
@@ -105,19 +94,8 @@ def dislike():
     poster_id = video_info[0]["id"]
     instrument = video_info[0]["instrument"]
 
-    # change like in database for instrument
-    if instrument == "Piano":
-        db.execute("UPDATE users SET likes_piano = likes_piano - 1 WHERE id=:poster_id",
-                   poster_id=poster_id)
-    if instrument == "Drum":
-        db.execute("UPDATE users SET likes_drum = likes_drum - 1 WHERE id=:poster_id",
-                   poster_id=poster_id)
-    if instrument == "Guitar":
-        db.execute("UPDATE users SET likes_guitar = likes_guitar - 1 WHERE id=:poster_id",
-                   poster_id=poster_id)
-    if instrument == "Electric-guitar":
-        db.execute("UPDATE users SET likes_electric_guitar = likes_electric_guitar - 1 WHERE id=:poster_id",
-                   poster_id=poster_id)
+    # dislikes poster's instrument counter
+    dislike_instrument(instrument, poster_id, db)
 
     # delete like from db
     db.execute("DELETE FROM likes WHERE poster_id = :poster_id AND video_id = :video_id AND liker_id = :liker_id",

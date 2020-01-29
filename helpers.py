@@ -78,3 +78,39 @@ def skill_counter(wants, user_info):
                 skill_levels["drum"] = "expert"
 
     return skill_levels
+
+def like_instrument(instrument, poster_id, db):
+
+    # change like in database for instrument
+    if instrument == "Piano":
+        db.execute("UPDATE users SET likes_piano = likes_piano + 1 WHERE id=:poster_id",
+                   poster_id=poster_id)
+    if instrument == "Drum":
+        db.execute("UPDATE users SET likes_drum = likes_drum + 1 WHERE id=:poster_id",
+                   poster_id=poster_id)
+    if instrument == "Guitar":
+        db.execute("UPDATE users SET likes_guitar = likes_guitar + 1 WHERE id=:poster_id",
+                   poster_id=poster_id)
+    if instrument == "Electric-guitar":
+        db.execute("UPDATE users SET likes_electric_guitar = likes_electric_guitar + 1 WHERE id=:poster_id",
+                   poster_id=poster_id)
+
+    pass
+
+def dislike_instrument(instrument, poster_id, db):
+
+    # change like in database for instrument
+    if instrument == "Piano":
+        db.execute("UPDATE users SET likes_piano = likes_piano - 1 WHERE id=:poster_id",
+                   poster_id=poster_id)
+    if instrument == "Drum":
+        db.execute("UPDATE users SET likes_drum = likes_drum - 1 WHERE id=:poster_id",
+                   poster_id=poster_id)
+    if instrument == "Guitar":
+        db.execute("UPDATE users SET likes_guitar = likes_guitar - 1 WHERE id=:poster_id",
+                   poster_id=poster_id)
+    if instrument == "Electric-guitar":
+        db.execute("UPDATE users SET likes_electric_guitar = likes_electric_guitar - 1 WHERE id=:poster_id",
+                   poster_id=poster_id)
+
+    pass
