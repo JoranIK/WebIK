@@ -82,4 +82,8 @@ Bij 0 tot 11 likes, is de gebruiker beginner. 10 likes daarbovenop verandert geb
 ### like en dislike_instrument
 Zet een like bij, of haalt hem weg in users, als een gebruiker op de liketoets klikt.
 
+## Screenshot van de belangrijkste pagina
 ![schets](doc/screenshots.jpg)
+
+## Productvideo
+https://www.youtube.com/watch?v=-5IoygCGOyk
